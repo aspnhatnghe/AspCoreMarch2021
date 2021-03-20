@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewData["Title"] = "InBangCuuChuong";
+}
+
+<h1>InBangCuuChuong</h1>
+
+@{
+    var ten = "Nhất Nghệ";
+    var nam = 2003;
+    var i = 0;
+    var N = 11;
+}
+
+<h1>Trung tâm @ten, sinh @nam</h1>
+@while (i < 10)
+{
+    i = i + 1;
+    <div>@N x @i = @(N*i).</div>
+}
+
+@for(var j = 1; j < 10; j++)
+{
+    <div>@N x @j = @(N * j).</div>
+}
