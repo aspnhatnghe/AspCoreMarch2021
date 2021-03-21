@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewData["Title"] = "HangHoa";
+    var soluong = new Random().Next(4, 50);
+}
+
+<h1>Danh sách Hàng hóa</h1>
+<link href="~/lab02/HangHoa.css" rel="stylesheet" />
+
+@for (var i = 0; i < soluong; i++)
+{
+    <div class="hh-box">
+        <img src="~/HangHoa/iphone-x-256gb-gray.jpg" class="hh-hinh" />
+        <img src="~/images/moi-icon.png" class="hh-icon-moi" />
+        <div class="hh-price">$10,000,000</div>
+        <div class="hh-box-actions">
+            <img src="~/images/Basket.png" />
+            <img src="~/images/Letter.png" />
+            <img src="~/images/favourites.png" />
+        </div>
+        <div class="hh-name">IPhone @i</div>
+    </div>
+}

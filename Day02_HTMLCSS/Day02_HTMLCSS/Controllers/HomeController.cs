@@ -23,6 +23,12 @@ namespace Day02_HTMLCSS.Controllers
             return View();
         }
 
+        // host/Home/HangHoa
+        public IActionResult HangHoa()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

@@ -1,0 +1,31 @@
+﻿.hh-box {
+    width: 200px;
+    height: 300px;
+    border: 1px solid blue;
+    text-align: center;
+    position:relative;
+    display:inline-block;
+    margin: 35px 5px 5px 5px;
+}
+    /*bóng hình hộp box-shadow*/
+    .hh-box:hover {
+        box-shadow: 0 0 7px red;
+        border-radius: 15px;
+    }
+
+.hh-hinh{ width:90%; margin-top:5px;}
+
+.hh-icon-moi{
+    position:absolute;top:0; right:0; width:80px;
+}
+.hh-price{position:absolute;left:5px; bottom:5px;
+    color:green; font-weight:bolder;
+}
+.hh-box-actions{
+    position:absolute; right:5px; bottom:5px;width:25px;
+}
+.hh-name{
+    position:absolute; top:-30px;left:0;
+    font-size:larger;color:chocolate;
+    font-weight:bolder;width:100%;
+}
