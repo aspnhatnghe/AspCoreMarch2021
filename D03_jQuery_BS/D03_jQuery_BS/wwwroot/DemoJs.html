@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>JAVASCRIPT</h1>
+    <h2>ES6 - ECMA2015</h2>
+    <h2>jQuery</h2>
+
+    let: thay đổi, trong block,<br />
+    const: ko đổi, trong block,<br />
+    var: thay đổi, toàn cục
+    <script>
+        console.log("HELLO");
+        console.log(typeof (x)); //undefined
+
+        //định nghĩa hàm
+        function cong(a, b) {
+            x = 7;
+            return a + b;
+        }
+
+        console.log(cong(11, 32));
+        console.log(x);
+
+        aa = 1;
+        bb = 1.8;
+        cc = "chuỗi";
+        //JSON - kiểu object (key, value)
+        obj = {
+            "Ten": "Nhất Nghệ",
+            "NamThanhLap": 2003,
+            "KhoaHoc": [
+                "ReactJs", "ASP.NET Core"
+            ],
+            "DangHoatDong": true,
+            "LienHe": {
+                "DienThoai": 39290007,
+                "Website": "nhatnghe.com"
+            }
+        }
+        console.log("kiểu", typeof (obj));
+        console.log(obj)
+        console.log(obj.Ten)
+        console.log(obj["Ten"])
+        console.log(obj.KhoaHoc)
+        console.log(obj.LienHe)
+    </script>
+</body>
+</html>
