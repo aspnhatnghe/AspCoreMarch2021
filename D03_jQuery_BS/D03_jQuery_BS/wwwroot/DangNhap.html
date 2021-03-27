@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <style>
+        .loi {
+            background-color: #fb0000;
+            color: white;
+        }
+    </style>
+    <script>
+        function checkEmpty(obj) {
+            if (obj.val().trim() == "") {
+                if (!obj.hasClass("loi")) {
+                    obj.addClass("loi");
+                }
+                obj.focus();
+                return true;
+            }
+            obj.removeClass("loi");
+            return false;
+        }
+        $(function () {
+            $("#btnLogin").click(function () {
+                const user = $("#txtUser");
+                const pass = $("#txtPass");
+
+                if ($(this).html() == "Logout") {
+                    $(this).html("Login");
+                    $("#result").html('');
+                    user.show(); user.val('');
+                    user.next().remove();
+                    pass.show(); pass.val('');
+                    pass.prev().remove();
+                    return;
+                }
+
+                if (checkEmpty(user) || checkEmpty(pass)) {
+                    return false;
+                }
+
+                //kiểm tra user/pass từ 5 kí tự trở lên là hợp lệ
+                if (user.val().length < 5 || pass.val().length < 5) {
+                    $("#result").html("Sai thông tin đăng nhập");
+                    return;
+                }
+                $("#result").html("Chúc mừng đăng nhập thành công!");
+                $(this).html("Logout");
+                //tạo thẻ div thêm vào sau thẻ input
+                user.after($("<span/>").html(user.val()));
+                user.hide();
+                pass.before($("<span/>").html(pass.val()));
+                pass.hide();
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Đăng nhập</h2>
+    Username: <input id="txtUser" placeholder="Nhập username" /><br />
+    Password: <input id="txtPass" placeholder="Nhập password" type="password" /><br />
+    <button id="btnLogin">Login</button>
+    <div id="result"></div>
+</body>
+</html>
