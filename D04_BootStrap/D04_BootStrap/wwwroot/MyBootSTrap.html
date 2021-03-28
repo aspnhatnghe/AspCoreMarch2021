@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Button to Open the Modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#divLogin">
+            Đăng nhập
+        </button>
+
+        <!-- The Modal -->
+        <div class="modal " id="divLogin">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Logins</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row form-group">
+                            <label class="col-3 text-right align-self-center">Username</label>
+                            <div class="col-9">
+                                <input class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <label class="col-3 text-right">Password</label>
+                            <div class="col-9">
+                                <input type="password" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="btnLogin" type="button" class="btn btn-success">
+                            <i class="fab fa-apple"></i>
+                            Login
+                        </button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#btnLogin").click(function () {
+                Swal.fire('Thông báo', 'Đăng nhập thành công', 'success');
+            });
+        });
+    </script>
+</body>
+</html>
