@@ -2,7 +2,12 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h2>Demo Extension</h2>
+@{ 
+    var N = new Random().Next(1, 1000);
+}
+<div>Tổng các số lẻ từ 1 đến @N là @N.TinhTongSoLe() </div>
+@{ 
+    var noel = new DateTime(2021, 12, 25);
+}
+<div>Còn @DateTime.Now.KhoangCachNgay(noel) đến Noel</div>

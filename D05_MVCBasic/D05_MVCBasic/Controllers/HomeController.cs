@@ -18,6 +18,11 @@ namespace D05_MVCBasic.Controllers
             _logger = logger;
         }
 
+        public IActionResult HinhHoc()
+        {
+            return View();
+        }
+
         public IActionResult Demo()
         {
             var diemA = new Diem

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "HinhHoc";
+    var dsHinhHoc = new List<HinhHoc>();
+    var rd = new Random();
+    var soLuongHinh = rd.Next(3, 20);
+    for (var i = 0; i < soLuongHinh; i++)
+    {
+        if(rd.Next(1, 100) % 2 == 1) //HCN
+        {
+            dsHinhHoc.Add(new HinhChuNhat {
+                Dai = rd.Next(10, 1000),
+                Rong = rd.Next(10, 1000)
+            });
+        }
+        else
+        {
+            dsHinhHoc.Add(new HinhTron
+            {
+                BanKinh = rd.NextDouble() * 1000
+            });
+        }
+    }
+}
+
+<h1>Danh sách Hình Học</h1>
+@foreach(var hinh in dsHinhHoc)
+{
+    hinh.TinhDienTichChuVi();
+    <div>@hinh</div>
+}
+
+
