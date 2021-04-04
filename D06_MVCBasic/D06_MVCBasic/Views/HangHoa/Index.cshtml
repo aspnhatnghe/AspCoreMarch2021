@@ -12,7 +12,7 @@
         @hangHoa.MaHh - @hangHoa.TenHh - @hangHoa.DonGia
 
         <a asp-action="Edit" asp-route-id="@hangHoa.MaHh" class="btn btn-secondary">Sửa</a>
-        <a asp-action="Delete" asp-route-maHh="@hangHoa.MaHh" class="btnXoa btn btn-danger" data-maHh="@hangHoa.MaHh">Xóa</a>
+        <a asp-action="Delete" asp-route-maHh="@hangHoa.MaHh" class="btnXoa btn btn-danger" data-mahh="@hangHoa.MaHh">Xóa</a>
     </div>
 }
 
@@ -30,7 +30,7 @@
                 }).then(res => {
                     if (res.isConfirmed) {
                         //chuyển tới action xóa
-                        window.location.href = "/HangHoa/Delete?maHh=" + $(this).data("maHh");
+                        window.location.href = "/HangHoa/Delete?maHh=" + $(this).data("mahh");
                         console.log($(this).attr("href"));
                     }
                 });
