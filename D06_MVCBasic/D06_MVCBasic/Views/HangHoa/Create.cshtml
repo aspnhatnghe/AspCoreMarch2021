@@ -1,0 +1,55 @@
+﻿@model D06_MVCBasic.Models.HangHoa
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Thêm Hàng hóa</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="text-danger">
+                @ViewBag.ThongBao
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaHh" class="control-label"></label>
+                <input asp-for="MaHh" class="form-control" />
+                <span asp-validation-for="MaHh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenHh" class="control-label"></label>
+                <input asp-for="TenHh" class="form-control" />
+                <span asp-validation-for="TenHh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DonGia" class="control-label"></label>
+                <input asp-for="DonGia" class="form-control" />
+                <span asp-validation-for="DonGia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuong" class="control-label"></label>
+                <input asp-for="SoLuong" class="form-control" />
+                <span asp-validation-for="SoLuong" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ConBan" /> @Html.DisplayNameFor(model => model.ConBan)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

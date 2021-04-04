@@ -43,14 +43,56 @@ namespace D06_MVCBasic.Controllers
             return View(sp);
         }
 
+        [HttpPost]
+        public IActionResult Edit(HangHoa model)
+        {
+            var sp = HangHoas.SingleOrDefault(hh => hh.MaHh == model.MaHh);
+            if(sp == null)
+            {
+                return NotFound();
+            }
+            //Update
+            sp.TenHh = model.TenHh;
+            sp.DonGia = model.DonGia;
+            sp.SoLuong = model.SoLuong;
+            sp.ConBan = model.ConBan;
+            //return View(model);
+            return RedirectToAction("Edit", "HangHoa", new { id = model.MaHh});
+        }
+
         public IActionResult Delete(int maHh)
         {
-            return View();
+            var sp = HangHoas.SingleOrDefault(hh => hh.MaHh == maHh);
+            if(sp != null)//có
+            {
+                HangHoas.Remove(sp);
+            }
+            return RedirectToAction("Index");
         }
 
         public IActionResult Index()
         {
             return View(HangHoas);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(HangHoa model)
+        {
+            var sp = HangHoas.SingleOrDefault(hh => hh.MaHh == model.MaHh);
+            if(sp != null)//đã có
+            {
+                ViewBag.ThongBao = "Hàng hóa này đã có";
+                return View(model);
+            }
+            HangHoas.Add(model);
+            return RedirectToAction(actionName: "Index", controllerName: "HangHoa");
+            //return RedirectToAction("Index", "HangHoa");
         }
     }
 }

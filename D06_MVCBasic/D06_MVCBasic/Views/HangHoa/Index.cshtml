@@ -5,12 +5,36 @@
 }
 
 <h2>Danh sách</h2>
-@foreach(var hangHoa in Model)
+<a asp-action="Create" class="btn btn-primary">Thêm mới</a>
+@foreach (var hangHoa in Model)
 {
     <div>
         @hangHoa.MaHh - @hangHoa.TenHh - @hangHoa.DonGia
 
         <a asp-action="Edit" asp-route-id="@hangHoa.MaHh" class="btn btn-secondary">Sửa</a>
-        <a asp-action="Delete" asp-route-maHh="@hangHoa.MaHh" class="btn btn-danger">Xóa</a>
+        <a asp-action="Delete" asp-route-maHh="@hangHoa.MaHh" class="btnXoa btn btn-danger" data-maHh="@hangHoa.MaHh">Xóa</a>
     </div>
+}
+
+@section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        $(function () {
+            $(".btnXoa").click(function (e) {
+                e.preventDefault();
+                Swal.fire({
+                    title: "Chắc xóa không?",
+                    confirmButtonText: "Xóa ngay",
+                    cancelButtonText: "Từ từ",
+                    showCancelButton: true
+                }).then(res => {
+                    if (res.isConfirmed) {
+                        //chuyển tới action xóa
+                        window.location.href = "/HangHoa/Delete?maHh=" + $(this).data("maHh");
+                        console.log($(this).attr("href"));
+                    }
+                });
+            });
+        });
+    </script>
 }
