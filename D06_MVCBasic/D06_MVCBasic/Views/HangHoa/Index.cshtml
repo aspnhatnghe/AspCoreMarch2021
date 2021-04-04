@@ -1,0 +1,16 @@
+﻿@model IEnumerable<D06_MVCBasic.Models.HangHoa>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Danh sách</h2>
+@foreach(var hangHoa in Model)
+{
+    <div>
+        @hangHoa.MaHh - @hangHoa.TenHh - @hangHoa.DonGia
+
+        <a asp-action="Edit" asp-route-id="@hangHoa.MaHh" class="btn btn-secondary">Sửa</a>
+        <a asp-action="Delete" asp-route-maHh="@hangHoa.MaHh" class="btn btn-danger">Xóa</a>
+    </div>
+}
