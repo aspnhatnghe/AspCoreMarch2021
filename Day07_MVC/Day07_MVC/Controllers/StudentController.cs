@@ -1,12 +1,16 @@
 ﻿using Day07_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.IO;
 using System.Text;
+using System.Text.Json;
 
 namespace Day07_MVC.Controllers
 {
     public class StudentController : Controller
     {
+        private readonly string jsonfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sinhvien.json");
+
         public IActionResult Index()
         {
             return View();
@@ -35,12 +39,36 @@ namespace Day07_MVC.Controllers
             else if (Save == "Lưu JSON")
             {
                 //object ==> json string 
-                var svjsonstr = System.Text.Json.JsonSerializer.Serialize(sinhvien);
-                var jsonfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sinhvien.json");
+                var svjsonstr = System.Text.Json.JsonSerializer.Serialize(sinhvien);                
                 System.IO.File.WriteAllText(jsonfilePath, svjsonstr);
             }
                 return View("Index"); // /Student/LuuXuongFile
             //return RedirectToAction("Index");// /Student/Index
+        }
+
+        public IActionResult DocTuFile(string type)
+        {
+            var sinhVien = new Student();
+            if(type == "JSON")
+            {
+                //đọc content file json
+                var jsonContent = System.IO.File.ReadAllText(jsonfilePath);
+                sinhVien = System.Text.Json.JsonSerializer.Deserialize<Student>(jsonContent);
+            }
+            else
+            {
+                var textfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sinhvien", "studentinfo.txt");
+                var lines = System.IO.File.ReadAllLines(textfilePath);
+                sinhVien.StudentId = int.Parse(TachChuoi(lines[0]));
+                sinhVien.StudentName = TachChuoi(lines[1]);
+                sinhVien.Diem = double.Parse(TachChuoi(lines[2]));
+            }
+            return View("Index", sinhVien);
+        }
+
+        string TachChuoi(string chuoi)
+        {
+            return chuoi.Split(":")[1].Trim();
         }
     }
 }

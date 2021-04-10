@@ -1,0 +1,13 @@
+﻿@model IEnumerable<FileDetail>
+@{
+    ViewData["Title"] = "ShowFile";
+}
+
+<h1>Show Files</h1>
+@foreach(var item in Model)
+{
+    <div>
+        @item.FileName - 
+        <a asp-action="Download" asp-route-filename="@item.FileName">Download @item.FileName</a>
+    </div>
+}
