@@ -1,6 +1,7 @@
 ﻿using Day07_MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
+using System.Text;
 
 namespace Day07_MVC.Controllers
 {
@@ -23,11 +24,23 @@ namespace Day07_MVC.Controllers
                     "Xếp loại: " + sinhvien.XepLoai
                 };
 
-                var textFilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "studentinfo.txt");
+                var textfoldPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sinhvien");
+                if (!Directory.Exists(textfoldPath))
+                {
+                    Directory.CreateDirectory(textfoldPath);
+                }
+                var textFilePath = Path.Combine(textfoldPath, "studentinfo.txt");
                 System.IO.File.WriteAllLines(textFilePath, chuoi);
             }
-
-            return View("Index");
+            else if (Save == "Lưu JSON")
+            {
+                //object ==> json string 
+                var svjsonstr = System.Text.Json.JsonSerializer.Serialize(sinhvien);
+                var jsonfilePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "sinhvien.json");
+                System.IO.File.WriteAllText(jsonfilePath, svjsonstr);
+            }
+                return View("Index"); // /Student/LuuXuongFile
+            //return RedirectToAction("Index");// /Student/Index
         }
     }
 }
