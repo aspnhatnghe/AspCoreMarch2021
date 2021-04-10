@@ -1,0 +1,52 @@
+﻿@model Day07_MVC.Models.Student
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="LuuXuongFile">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="StudentId" class="control-label"></label>
+                <input asp-for="StudentId" class="form-control" />
+                <span asp-validation-for="StudentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StudentName" class="control-label"></label>
+                <input asp-for="StudentName" class="form-control" />
+                <span asp-validation-for="StudentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Diem" class="control-label"></label>
+                <input asp-for="Diem" class="form-control" />
+                <span asp-validation-for="Diem" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="XepLoai" class="control-label"></label>
+                <input asp-for="XepLoai" class="form-control" readonly />
+                <span asp-validation-for="XepLoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input name="Save" type="submit" value="Lưu TXT" class="btn btn-primary" />
+                <input name="Save" type="submit" value="Lưu JSON" class="btn btn-primary" />
+                <a asp-action="DocTuFile" 
+                   asp-route-type="TXT" class="btn btn-success">Mở TXT</a>
+                <a asp-action="DocTuFile" 
+                   asp-route-type="JSON" class="btn btn-success">Mở JSON</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
