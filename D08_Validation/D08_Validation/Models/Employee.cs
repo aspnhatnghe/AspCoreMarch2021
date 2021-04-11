@@ -1,7 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace D08_Validation.Models
 {
+    public enum Gender { Nam, Nữ}
+
     public class Employee
     {
         public int Id { get; set; }
@@ -9,6 +12,7 @@ namespace D08_Validation.Models
         [Display(Name = "Mã nhân viên")]
         [Required(ErrorMessage ="*")]
         [StringLength(6, MinimumLength = 6, ErrorMessage ="Đúng 6 kí tự")]
+        [Remote(action:"CheckExistEmplyee", controller:"Employee")]
         public string EmployeeId { get; set; }
 
         [Display(Name ="Họ tên")]
@@ -28,13 +32,14 @@ namespace D08_Validation.Models
 
         [Display(Name ="Ngày sinh")]
         [DataType(DataType.Date)]
+        [CheckBirthDate]
         public string BirthDate { get; set; }
 
         [Required]
         public string Address { get; set; }
 
         [Display(Name ="Giới tính")]
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
 
         [Phone]
         public string Phone { get; set; }

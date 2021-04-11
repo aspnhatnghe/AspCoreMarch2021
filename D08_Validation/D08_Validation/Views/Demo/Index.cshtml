@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>DEMO jQuery Validate</h1>
+<form id="frmDemo">
+    <div>
+        Name : <input name="Name" />
+    </div>
+    <div>
+        Age : <input name="Age" />
+    </div>
+    <button>Validate</button>
+</form>
+<style>
+    .error{color:red; font-style:italic;}
+</style>
+@section Scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#frmDemo").validate({
+                rules: {
+                    Name: { required: true, minlength: 5 },
+                    Age: { digits: true, range: [18, 60] }
+                },
+                messages: {
+                    Name: { required: "*", minlength: "Tối thiểu 5 kí tự" }
+                }
+            });
+        });
+    </script>
+}
