@@ -86,13 +86,32 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
     <script>
+        function kiemTraGmail(value, element) {
+            //javascript regex
+            //đầu: .co .00  .co.00
+            // ([.-][a - zA - Z0 - 9]{ 2,})*
+            let pattern = /^[a-zA-Z]+([.-][a-zA-Z0-9]{2,})*@@gmail.com$/i;
+            return this.optional(element) || pattern.test(value);
+        }
+
+        $.validator.addMethod("gmail", kiemTraGmail, "Không đúng định dạng Gmail");
+
         $(document).ready(function () {
             $("#frmDangKy").validate({
                 rules: {
+                    ThongTinThem: { maxlength: 250 },
+                    HeSo: { digits: true, min: 1 },
+                    Diem: { number: true, range: [0, 10] },
+                    Hinh: { extension: "jpg|png|gif|jpeg" },
+                    SoTaiKhoan: { creditCard: true },
                     MaSV: { required: true, minlength: 6 },
                     HoTen: { required: true },
                     NgaySinh: { date: true },
-                    Email: { email: true }, XacNhanEmail: { equalTo: "input[name='Email']"}
+                    Email: {
+                        email: true,
+                        gmail: true
+                    },
+                    XacNhanEmail: { equalTo: "input[name='Email']" }
                 },
                 messages: {}
             });
