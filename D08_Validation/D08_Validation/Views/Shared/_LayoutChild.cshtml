@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "_LayoutChild";
+    Layout = "~/Views/Shared/_Phai.cshtml";
+}
+
+<div class="text-capitalize text-danger border-danger">
+    Breadcrums
+    @RenderSection("breadcrum", required: false)
+</div>
+<div>
+    @RenderBody()
+</div>
+

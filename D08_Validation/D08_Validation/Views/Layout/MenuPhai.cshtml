@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewData["Title"] = "MenuPhai";
+    Layout = "~/Views/Shared/_Phai.cshtml";
+    var data = new List<Category> {
+        new Category{ CategoryId = 1, CategoryName = "Điện máy"},
+        new Category{ CategoryId = 2, CategoryName = "Điện tử"},
+        new Category{ CategoryId = 3, CategoryName = "Điện lạnh"},
+        new Category{ CategoryId = 4, CategoryName = "Điện gia dụng"}
+    };
+}
+
+<h1>Menu Phải</h1>
+@await Html.PartialAsync("_Category", data)
+

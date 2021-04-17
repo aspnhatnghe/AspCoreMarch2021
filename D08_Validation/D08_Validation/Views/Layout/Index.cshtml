@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Trai.cshtml";
+}
+
+<h1>Index</h1>
+
+<h2>DEMO LAYOUT WITH LEFT MENU</h2>
+@await Html.PartialAsync("_DanhMuc")
+@{
+    var hello = "Hello";
+    await Html.RenderPartialAsync("~/Views/Shared/_DanhMuc.cshtml");
+}

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Category>
+
+<div class="card">
+    <div class="card-header bg-primary">
+        DANH MỤC
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model)
+        {
+            <a class="list-group-item">@item.CategoryName</a>
+        }
+    </div>
+</div>

@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/MyTemplate.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <header id="myheader">#HEADER</header>
+        <div class="row m-0">
+            <div class="col-9 mycontent">
+                @RenderBody()
+            </div>
+            <aside class="col-3"></aside>
+        </div>
+        <footer id="myfooter">
+            Bản quyền thuộc về DEF = Menu phải
+        </footer>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+</body>
+</html>
