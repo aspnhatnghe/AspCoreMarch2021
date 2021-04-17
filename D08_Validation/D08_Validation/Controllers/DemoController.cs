@@ -36,6 +36,11 @@ namespace D08_Validation.Controllers
             return result.ToString();
         }
         
+        public string CheckSecurityCode(string MaBaoMat)
+        {
+            return HttpContext.Session.GetString("MaBaoMat") == MaBaoMat ? "true" : "false";
+        }
+
         public IActionResult DangKy()
         {
             ViewBag.MaBaoMat = SinhMaBaoMat();

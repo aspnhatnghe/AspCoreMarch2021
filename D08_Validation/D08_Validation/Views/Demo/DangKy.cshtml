@@ -63,8 +63,11 @@
     </div>
     <div class="row m-1">
         <div class="col-4 col-md-3 text-right">Mã bảo mật</div>
-        <div class="col-8 col-md-9">
-            <span></span>
+        <span class="col-2 text-danger" id="lblMaBaoMat">
+            @ViewBag.MaBaoMat
+        </span>
+        <button type="button" id="btnRefresh">Refresh</button>
+        <div class="col-4 col-md-5">
             <input name="MaBaoMat" placeholder="Mã bảo mật" class="w-100" />
         </div>
     </div>
@@ -97,8 +100,22 @@
         $.validator.addMethod("gmail", kiemTraGmail, "Không đúng định dạng Gmail");
 
         $(document).ready(function () {
+            $("#btnRefresh").click(function () {
+                $.ajax({
+                    type: "get",
+                    url: "/Demo/SinhMaBaoMat",
+                    data: { "length": 5 },
+                    success: function (res) {
+                        $("#lblMaBaoMat").text(res);
+                    }
+                });
+            });
+
             $("#frmDangKy").validate({
                 rules: {
+                    MaBaoMat: {
+                        remote: "/Demo/CheckSecurityCode"
+                    },
                     ThongTinThem: { maxlength: 250 },
                     HeSo: { digits: true, min: 1 },
                     Diem: { number: true, range: [0, 10] },
