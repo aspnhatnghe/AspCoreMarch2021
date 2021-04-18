@@ -1,0 +1,18 @@
+﻿[
+  {
+    "MaLoai": 1,
+    "TenLoai": "Điện thoại"
+  },
+  {
+    "MaLoai": 2,
+    "TenLoai": "Máy tính bảng"
+  },
+  {
+    "MaLoai": 3,
+    "TenLoai": "Laptop"
+  },
+  {
+    "MaLoai": 4,
+    "TenLoai": "Máy lạnh"
+  }
+]
