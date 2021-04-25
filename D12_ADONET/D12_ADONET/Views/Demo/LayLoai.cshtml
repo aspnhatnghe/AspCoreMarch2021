@@ -1,0 +1,14 @@
+﻿@model System.Data.DataTable
+@using System.Data
+@{
+    ViewData["Title"] = "LayLoai";
+}
+
+<h1>Loại</h1>
+@foreach(DataRow row in Model.Rows)
+{
+    <div>
+        @row["TenLoai"] - @row["MoTa"]
+    </div>
+}
+
