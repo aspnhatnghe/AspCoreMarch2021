@@ -72,7 +72,27 @@ namespace MyCodeDemo.Models
 
         public Loai ThemLoai(Loai loai)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var maLoaiParam = new SqlParameter("MaLoai", SqlDbType.Int);
+                maLoaiParam.Direction = ParameterDirection.Output;
+
+                var loaiparams = new SqlParameter[]
+                {
+                    maLoaiParam,
+                    new SqlParameter("TenLoai", loai.TenLoai),
+                    new SqlParameter("MoTa", loai.MoTa),
+                    new SqlParameter("Hinh", loai.Hinh)
+                };
+                DataProvider.ExcuteNonQuery("spThemLoai", CommandType.StoredProcedure, loaiparams);
+
+                loai.MaLoai = Convert.ToInt32(maLoaiParam.Value);
+                return loai;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         public List<Loai> TimLoai(string keyword)
