@@ -9,7 +9,7 @@ namespace MyCodeDemo.Models
     {
         List<Loai> LayTatCa();
         List<Loai> TimLoai(string keyword);
-        Loai LayLoai();
+        Loai LayLoai(int maLoai);
         bool SuaLoai(Loai loai);
         bool XoaLoai(int maLoai);
         Loai ThemLoai(Loai loai);
