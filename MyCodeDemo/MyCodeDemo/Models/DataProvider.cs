@@ -48,6 +48,12 @@ namespace ASPCore.ADONETLab.Models
             return kq;
         }
 
+        /// <summary>
+        /// Hàm xử lý thêm/xóa/sửa
+        /// </summary>
+        /// <param name="sql">câu lệnh sql hay tên store</param>
+        /// <param name="type"></param>
+        /// <param name="paras"></param>
         public static void ExcuteNonQuery(string sql, CommandType type, SqlParameter[] paras)
         {
             SqlConnection sqlcon = new SqlConnection(ChuoiKetNoi);
