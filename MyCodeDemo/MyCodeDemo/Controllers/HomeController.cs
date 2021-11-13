@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ASPCore.ADONETLab.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MyCodeDemo.Models;
@@ -29,15 +30,42 @@ namespace MyCodeDemo.Controllers
         {
             var sb = new StringBuilder();
 
-            var sqlConnection = new SqlConnection(_configuration.GetConnectionString("MyEstore"));
-            var sqlCommand = new SqlCommand("SELECT * FROM Loai", sqlConnection);
-            var adapter = new SqlDataAdapter(sqlCommand);
-            var tblLoai = new DataTable();
-            adapter.Fill(tblLoai);
+            //var sqlConnection = new SqlConnection(_configuration.GetConnectionString("MyEstore"));
+            //var sqlCommand = new SqlCommand("SELECT * FROM Loai", sqlConnection);
+            //var adapter = new SqlDataAdapter(sqlCommand);
+            //var tblLoai = new DataTable();
+            //adapter.Fill(tblLoai);
 
-            foreach(DataRow dr in tblLoai.Rows)
+            var tblLoai = DataProvider.TruyVan_LayDuLieu("SELECT * FROM Loai");
+
+            foreach (DataRow dr in tblLoai.Rows)
             {
                 sb.AppendLine(dr["TenLoai"].ToString());
+            }
+
+            return sb.ToString();
+        }
+
+        public string ThemLoai(string ten)
+        {
+            var sb = new StringBuilder();
+            try
+            {
+                var sql = $"INSERT INTO Loai(TenLoai, MoTa) VALUES(N'{ten}', N'{ten}')";
+
+                //var sqlConnection = new SqlConnection(_configuration.GetConnectionString("MyEstore"));
+                //sqlConnection.Open();
+                //var sqlCommand = new SqlCommand(sql, sqlConnection);
+                //sqlCommand.ExecuteNonQuery();
+                //sqlConnection.Close();
+
+                DataProvider.TruyVan_XuLy(sql);
+
+                sb.AppendLine("Thành công");
+            }
+            catch (Exception ex)
+            {
+                sb.AppendLine($"Lỗi: {ex.Message}");
             }
 
             return sb.ToString();
