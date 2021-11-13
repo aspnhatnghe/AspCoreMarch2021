@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using MyCodeDemo.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -21,6 +23,24 @@ namespace MyCodeDemo.Controllers
         {
             _logger = logger;
             _configuration = configuration;
+        }
+
+        public string DanhSachLoai()
+        {
+            var sb = new StringBuilder();
+
+            var sqlConnection = new SqlConnection(_configuration.GetConnectionString("MyEstore"));
+            var sqlCommand = new SqlCommand("SELECT * FROM Loai", sqlConnection);
+            var adapter = new SqlDataAdapter(sqlCommand);
+            var tblLoai = new DataTable();
+            adapter.Fill(tblLoai);
+
+            foreach(DataRow dr in tblLoai.Rows)
+            {
+                sb.AppendLine(dr["TenLoai"].ToString());
+            }
+
+            return sb.ToString();
         }
 
         public string ReadConfig()
@@ -47,5 +67,8 @@ namespace MyCodeDemo.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
     }
 }
