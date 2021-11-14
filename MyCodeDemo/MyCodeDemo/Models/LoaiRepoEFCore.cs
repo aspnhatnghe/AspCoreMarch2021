@@ -25,16 +25,39 @@ namespace MyCodeDemo.Models
             return loai;
         }
 
-
-
         public bool SuaLoai(Loai loai)
         {
-            throw new NotImplementedException();
+            var _loai = _context.Loais.SingleOrDefault(lo => lo.MaLoai == loai.MaLoai);
+            if (_loai == null)
+            {
+                return false;
+            }
+            try
+            {
+                _loai.TenLoai = loai.TenLoai;
+                _loai.MoTa = loai.MoTa;
+                _loai.Hinh = loai.Hinh;
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public Loai ThemLoai(Loai loai)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Add(loai);
+                _context.SaveChanges();
+                return loai;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public List<Loai> TimLoai(string keyword)
@@ -44,7 +67,21 @@ namespace MyCodeDemo.Models
 
         public bool XoaLoai(int maLoai)
         {
-            throw new NotImplementedException();
+            var _loai = _context.Loais.SingleOrDefault(lo => lo.MaLoai == maLoai);
+            if (_loai == null)
+            {
+                return false;
+            }
+            try
+            {
+                _context.Remove(_loai);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

@@ -21,6 +21,12 @@ namespace MyCodeDemo.Controllers
             return View(_loaiRepo.LayTatCa());
         }
 
+        public IActionResult Delete(int maloai)
+        {
+            var loai = _loaiRepo.XoaLoai(maloai);
+            return RedirectToAction("Index");
+        }
+
         [HttpGet]
         public IActionResult Edit(int maloai)
         {
