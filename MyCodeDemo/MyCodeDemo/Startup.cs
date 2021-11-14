@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyCodeDemo.Entities;
 using MyCodeDemo.Models;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,11 @@ namespace MyCodeDemo
             services.AddDbContext<MyDbContext>(option => {
                 option.UseSqlServer(Configuration.GetConnectionString("MyDatabase"));
             });
+
+            services.AddDbContext<eStore20Context>(option => {
+                option.UseSqlServer(Configuration.GetConnectionString("MyEstore"));
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
