@@ -27,7 +27,8 @@ namespace MyCodeDemo
         {
             services.AddControllersWithViews();
 
-            services.AddScoped<ILoaiRepository, LoaiRepoAdoNet>();
+            //services.AddScoped<ILoaiRepository, LoaiRepoAdoNet>();
+            services.AddScoped<ILoaiRepository, LoaiRepoEFCore>();
 
             //đăng ký dùng EFCore
             services.AddDbContext<MyDbContext>(option => {

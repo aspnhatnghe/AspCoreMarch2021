@@ -15,5 +15,12 @@ namespace MyCodeDemo.Models
         public string TenLoai { get; set; }
         public string Hinh { get; set; }
         public string MoTa { get; set; }
+
+        public ICollection<HangHoa> HangHoas { get; set; }
+
+        public Loai()
+        {
+            HangHoas = new HashSet<HangHoa>();
+        }
     }
 }

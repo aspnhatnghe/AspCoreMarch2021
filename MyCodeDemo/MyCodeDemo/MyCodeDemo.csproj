@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20211114025634_AddTblHangHoa.cs" />
+    <Compile Remove="Migrations\20211114025634_AddTblHangHoa.Designer.cs" />
+    <Compile Remove="Migrations\20211114025718_AddTblHangHoa.cs" />
+    <Compile Remove="Migrations\20211114025718_AddTblHangHoa.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.18" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.21" />
