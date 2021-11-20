@@ -1,0 +1,35 @@
+﻿@model IEnumerable<MyCodeDemo.Entities.HangHoa>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Danh sách Hàng hóa</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Hình</th>
+            <th>Hàng hóa</th>
+            <th>Giá</th>
+            <th>Loại</th>
+            <th>Nhà cung cấp</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/Hinh/HangHoa/@item.Hinh" alt="@item.TenHh" height="80" />
+                </td>
+                <td>@item.TenHh</td>
+                <td>@item.DonGia.Value.ToString("#,##0") đ</td>
+                <td>@item.MaLoaiNavigation?.TenLoai</td>
+                <td>@item.MaNccNavigation?.TenCongTy</td>
+                <td></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

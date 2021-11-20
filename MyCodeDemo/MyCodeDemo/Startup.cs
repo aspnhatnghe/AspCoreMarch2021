@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyCodeDemo.Entities;
 using MyCodeDemo.Models;
+using MyCodeDemo.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace MyCodeDemo
 
             //services.AddScoped<ILoaiRepository, LoaiRepoAdoNet>();
             services.AddScoped<ILoaiRepository, LoaiRepoEFCore>();
+            services.AddScoped<IHangHoaService, HangHoaSqlServerService>();
 
             //đăng ký dùng EFCore
             services.AddDbContext<MyDbContext>(option => {
