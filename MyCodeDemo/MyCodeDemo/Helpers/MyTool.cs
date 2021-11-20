@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace MyCodeDemo.Helpers
 {
@@ -15,6 +16,24 @@ namespace MyCodeDemo.Helpers
             {
                 file.WriteLine(content);
                 //file.Close();
+            }
+        }
+
+        public static string UploadFile(string folder, IFormFile file)
+        {
+            try
+            {
+                var fileName = $"{DateTime.UtcNow.Ticks}_{file.FileName}";
+                var pathFile = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Hinh", folder, fileName);
+                using (var newFile = new FileStream(pathFile, FileMode.Create))
+                {
+                    file.CopyTo(newFile);
+                    return fileName;
+                }
+            }
+            catch
+            {
+                return null;
             }
         }
     }
