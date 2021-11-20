@@ -53,5 +53,36 @@ namespace MyCodeDemo.Controllers
             }
             return View();
         }
+
+        [HttpGet]
+        public IActionResult Edit(int mahh)
+        {
+            var result = _hangHoaService.GetById(mahh);
+            if(result == null)
+            {
+                return NotFound();
+            }
+            ViewBag.MaLoai = new SelectList(_context.Loai.ToList(), "MaLoai", "TenLoai", result.MaLoai);
+            ViewBag.MaNcc = new SelectList(_context.NhaCungCap.ToList(), "MaNcc", "TenCongTy", result.MaNcc);
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(HangHoa model, IFormFile FileHinh)
+        {
+            if (ModelState.IsValid)
+            {
+                //Hình?
+                if (FileHinh != null)
+                {
+                    //upload file
+                    model.Hinh = MyTool.UploadFile("HangHoa", FileHinh);
+                }
+
+                _hangHoaService.Update(model);
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
     }
 }

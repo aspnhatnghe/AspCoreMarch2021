@@ -27,7 +27,9 @@
                 <td>@item.DonGia.Value.ToString("#,##0") đ</td>
                 <td>@item.MaLoaiNavigation?.TenLoai</td>
                 <td>@item.MaNccNavigation?.TenCongTy</td>
-                <td></td>
+                <td>
+                    <a asp-action="Edit" asp-route-mahh="@item.MaHh">Sửa</a>
+                </td>
             </tr>
         }
     </tbody>

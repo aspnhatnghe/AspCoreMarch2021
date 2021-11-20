@@ -93,5 +93,10 @@ namespace MyCodeDemo.Services
                 return false;
             }
         }
+
+        public HangHoa GetById(int id)
+        {
+            return _context.HangHoa.SingleOrDefault(hh => hh.MaHh == id);
+        }
     }
 }

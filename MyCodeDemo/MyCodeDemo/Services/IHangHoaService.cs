@@ -5,6 +5,7 @@ namespace MyCodeDemo.Services
 {
     public interface IHangHoaService
     {
+        HangHoa GetById(int id);
         List<HangHoa> GetAll();
         List<HangHoa> Search(string keyword, double? giaTu, double? giaDen);
         HangHoa Add(HangHoa hangHoa);
