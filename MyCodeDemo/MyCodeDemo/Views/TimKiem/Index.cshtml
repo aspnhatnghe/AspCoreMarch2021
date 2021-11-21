@@ -10,7 +10,25 @@
     đến: <input name="ToPrice" type="number" step="0.01" />
     <button class="btn btn-primary">Tìm</button>
 </form>
-
+<div>Trang: @ViewBag.CurrentPage/@ViewBag.TotalPage</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        @if (ViewBag.TotalPage != null)
+        {
+            for (var idx = 0; idx < (int)ViewBag.TotalPage; idx++)
+            {
+                var pageIndex = idx + 1;
+                <li class="page-item @(ViewBag.CurrentPage == pageIndex ? "active": "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@pageIndex">
+                        @pageIndex
+                    </a>
+                </li>
+            }
+        }
+        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+</nav>
 <table class="table">
     <tbody>
         @foreach (var hh in Model)
