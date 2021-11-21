@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyCodeDemo.Entities;
+using MyCodeDemo.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace MyCodeDemo.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new List<HangHoaVM>());
         }
 
         [HttpPost]
@@ -38,8 +39,19 @@ namespace MyCodeDemo.Controllers
                 data = data.Where(hh => hh.DonGia.Value <= ToPrice);
             }
 
-            var result = data.ToList();
-            return View();
+            var result = data
+                .Select(hh => new HangHoaVM
+                {
+                    MaHh = hh.MaHh,
+                    TenHh = hh.TenHh,
+                    DonGia = hh.DonGia.Value,
+                    GiamGia = hh.GiamGia,
+                    Loai = hh.MaLoaiNavigation.TenLoai,
+                    NhaCungCap = hh.MaNccNavigation.TenCongTy
+                })
+                .ToList();
+            //ViewBag.KetQua = result;
+            return View(result);
         }
     }
 }

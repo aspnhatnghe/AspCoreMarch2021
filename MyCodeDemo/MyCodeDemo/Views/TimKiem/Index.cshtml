@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<MyCodeDemo.ViewModels.HangHoaVM>
 @{
     ViewData["Title"] = "Index";
 }
@@ -11,3 +11,20 @@
     <button class="btn btn-primary">Tìm</button>
 </form>
 
+<table class="table">
+    <tbody>
+        @foreach (var hh in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Detail" asp-controller="Product" asp-route-id="@hh.MaHh">@hh.TenHh</a>
+                </td>
+                <td>@hh.DonGia</td>
+                <td>@(hh.GiamGia * 100) %</td>
+                <td>@hh.GiaBan</td>
+                <td>@hh.Loai</td>
+                <td>@hh.NhaCungCap</td>
+            </tr>
+        }
+    </tbody>
+</table>
