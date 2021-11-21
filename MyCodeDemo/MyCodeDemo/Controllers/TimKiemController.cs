@@ -18,14 +18,18 @@ namespace MyCodeDemo.Controllers
             _context = context;
         }
 
-        //public IActionResult Index()
-        //{
-        //    return View(new List<HangHoaVM>());
-        //}
+        public IActionResult Index()
+        {
+            return View(new List<HangHoaVM>());
+        }
 
-        //[HttpPost]
+        [HttpPost]
         public IActionResult Index(string Keyword, double? FromPrice, double? ToPrice, int page = 1)
         {
+            ViewBag.Keyword = Keyword;
+            ViewBag.FromPrice = FromPrice;
+            ViewBag.ToPrice = ToPrice;
+
             //step 1: Xử lý lấy/lọc dữ liệu
             var data = _context.HangHoa.AsQueryable();
             if (!string.IsNullOrEmpty(Keyword))
@@ -67,6 +71,35 @@ namespace MyCodeDemo.Controllers
                 .ToList();
             //ViewBag.KetQua = result;
             return View(result);
+        }
+
+        public IActionResult ThongKe(DateTime? TuNgay, DateTime? DenNgay)
+        {
+            var dsCTHD = _context.ChiTietHd.AsQueryable();
+            if (TuNgay.HasValue)
+            {
+                dsCTHD = dsCTHD.Where(cthd => cthd.MaHdNavigation.NgayDat >= TuNgay);
+            }
+            if (DenNgay.HasValue)
+            {
+                dsCTHD = dsCTHD.Where(cthd => cthd.MaHdNavigation.NgayDat <= DenNgay);
+            }
+
+            var data = dsCTHD.GroupBy(p => new
+                {
+                    p.MaHhNavigation.MaLoai,
+                    p.MaHhNavigation.MaLoaiNavigation.TenLoai
+                })
+                .Select(cthd => new ThongKeLoai { 
+                    MaLoai = cthd.Key.MaLoai,
+                    TenLoai = cthd.Key.TenLoai,
+                    DoanhThu = cthd.Sum(e => e.DonGia * e.SoLuong * (1 - e.GiamGia)),
+                    SoLuongHangHoa = cthd.Sum(e => e.SoLuong),
+                    GiaTB = cthd.Average(e => e.DonGia),
+                    GiaTN = cthd.Min(e => e.DonGia),
+                    GiaCN = cthd.Max(e => e.DonGia)
+                });
+            return View(data.ToList());
         }
     }
 }

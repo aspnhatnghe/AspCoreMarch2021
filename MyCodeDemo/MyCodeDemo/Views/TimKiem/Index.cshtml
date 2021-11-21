@@ -5,9 +5,9 @@
 
 <h1>Tìm kiếm</h1>
 <form asp-action="Index">
-    Cần tìm: <input name="Keyword" placeholder="Nhập từ khóa" />
-    Giá từ: <input name="FromPrice" type="number" step="0.01" />
-    đến: <input name="ToPrice" type="number" step="0.01" />
+    Cần tìm: <input name="Keyword" placeholder="Nhập từ khóa" value="@ViewBag.Keyword" />
+    Giá từ: <input name="FromPrice" type="number" step="0.01" value="@ViewBag.FromPrice" />
+    đến: <input name="ToPrice" type="number" step="0.01" value="@ViewBag.ToPrice" />
     <button class="btn btn-primary">Tìm</button>
 </form>
 <div>Trang: @ViewBag.CurrentPage/@ViewBag.TotalPage</div>
@@ -20,9 +20,16 @@
             {
                 var pageIndex = idx + 1;
                 <li class="page-item @(ViewBag.CurrentPage == pageIndex ? "active": "")">
-                    <a class="page-link" asp-action="Index" asp-route-page="@pageIndex">
-                        @pageIndex
-                    </a>
+                    @*<a class="page-link" asp-action="Index" asp-route-page="@pageIndex" asp-route-keyword="@ViewBag.Keyword" asp-route-FromPrice="@ViewBag.FromPrice" asp-route-ToPrice="@ViewBag.ToPrice">
+                            @pageIndex
+                        </a>*@
+                    <form asp-action="Index">
+                        <input name="Keyword" type="hidden" value="@ViewBag.Keyword" />
+                        <input name="FromPrice" step="0.01" value="@ViewBag.FromPrice" type="hidden" />
+                        <input name="ToPrice" step="0.01" value="@ViewBag.ToPrice" type="hidden" />
+                        <input type="hidden" value="@pageIndex" name="page" />
+                        <button class="page-link">@pageIndex</button>
+                    </form>
                 </li>
             }
         }

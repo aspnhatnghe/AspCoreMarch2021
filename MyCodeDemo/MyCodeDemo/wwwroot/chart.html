@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart.js Pie Chart</title>
+    <!--Chart.js JS CDN--> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script> 
+  </head>
+  <body>
+
+    <div>
+	<canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var myChart = new Chart(ctx, {
+          type: 'pie',
+          data: {
+            labels: ["Accepted","Pending", "Rejected"],
+            datasets: [{ 
+                data: [70,10,6],
+                borderColor:[
+                  "#3cba9f",
+                  "#ffa500",
+                  "#c45850",
+                ],
+                backgroundColor: [
+                  "rgb(60,186,159,0.1)",
+                  "rgb(255,165,0,0.1)",
+                  "rgb(196,88,80,0.1)",
+                ],
+                borderWidth:2,
+              }]
+          },
+        options: {
+          scales: {
+            xAxes: [{ 
+               display: False,
+            }],
+            yAxes: [{
+               display: False,
+            }],
+          }
+        },
+      });
+
+    </script>
+
+  
+  
+  </body>
+</html>
