@@ -24,7 +24,23 @@ namespace MyCodeDemo.Controllers
         [HttpPost]
         public IActionResult Index(string Keyword, double? FromPrice, double? ToPrice)
         {
+            var data = _context.HangHoa.AsQueryable();
+            if (!string.IsNullOrEmpty(Keyword))
+            {
+                data = data.Where(hh => hh.TenHh.Contains(Keyword));
+            }
+            if (FromPrice.HasValue)
+            {
+                data = data.Where(hh => hh.DonGia.Value >= FromPrice);
+            }
+            if (ToPrice.HasValue)
+            {
+                data = data.Where(hh => hh.DonGia.Value <= ToPrice);
+            }
+
+            var result = data.ToList();
             return View();
         }
     }
 }
+
