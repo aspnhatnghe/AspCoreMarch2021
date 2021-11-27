@@ -66,7 +66,7 @@ namespace MyCodeDemo.Controllers
                 var sheet = package.Workbook.Worksheets["Sheet1"];
                 sheet.Cells["A1"].Value = "Hello World!";
                 var index = 6;
-                foreach(var lo in data)
+                foreach (var lo in data)
                 {
                     sheet.Cells[$"A{index}"].Value = lo.MaLoai.ToString();
                     sheet.Cells[$"B{index}"].Value = lo.TenLoai.ToString();
@@ -83,6 +83,44 @@ namespace MyCodeDemo.Controllers
                 var fileName = "DSLoai.xlsx";
                 return File(excelData, contentType, fileName);
             }
+        }
+
+        [HttpGet]
+        public IActionResult ImportLoai()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ImportLoai(IFormFile myfile)
+        {
+            if (myfile != null)
+            {
+                var dsLoaiImport = new List<Entities.Loai>();
+
+                using (var stream = new MemoryStream())
+                {
+                    myfile.CopyTo(stream);
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        var sheet = package.Workbook.Worksheets["Sheet1"];
+
+                        int rowCount = sheet.Dimension.Rows - 5;
+
+                        for(int i = 0; i < rowCount; i++)
+                        {
+                            dsLoaiImport.Add(new Entities.Loai { 
+                                MaLoai = int.Parse(sheet.Cells[$"A{i + 6}"].Value.ToString()),
+                                TenLoai = sheet.Cells[$"B{i + 6}"].Value.ToString(),
+                                MoTa = sheet.Cells[$"C{i + 6}"].Value.ToString(),
+                                Hinh = sheet.Cells[$"D{i + 6}"].Value?.ToString(),
+                            });
+                        }
+                    }
+                }
+            }
+            return View();
         }
     }
 }
