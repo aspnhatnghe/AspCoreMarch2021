@@ -26,6 +26,7 @@ namespace MyCodeDemo.Controllers
             {
                 MaHh = hh.MaHh,
                 TenHh = hh.TenHh,
+                Hinh = hh.Hinh,
                 DonGia = hh.DonGia.Value,
                 GiamGia = hh.GiamGia,
                 Loai = hh.MaLoaiNavigation.TenLoai,
