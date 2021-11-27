@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyCodeDemo.Entities;
 using MyCodeDemo.ViewModels;
 using System;
@@ -31,7 +32,9 @@ namespace MyCodeDemo.Controllers
             ViewBag.ToPrice = ToPrice;
 
             //step 1: Xử lý lấy/lọc dữ liệu
-            var data = _context.HangHoa.AsQueryable();
+            var data = _context.HangHoa
+                .Include(hh => hh.ChiTietHd)
+                .AsQueryable();
             if (!string.IsNullOrEmpty(Keyword))
             {
                 data = data.Where(hh => hh.TenHh.Contains(Keyword));
@@ -66,7 +69,8 @@ namespace MyCodeDemo.Controllers
                     DonGia = hh.DonGia.Value,
                     GiamGia = hh.GiamGia,
                     Loai = hh.MaLoaiNavigation.TenLoai,
-                    NhaCungCap = hh.MaNccNavigation.TenCongTy
+                    NhaCungCap = hh.MaNccNavigation.TenCongTy,
+                    ChiTietHds = hh.ChiTietHd.ToList()
                 })
                 .ToList();
             //ViewBag.KetQua = result;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyCodeDemo.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,5 +16,6 @@ namespace MyCodeDemo.ViewModels
         public double GiaBan => DonGia * (1 - GiamGia);
         public string Loai { get; set; }
         public string NhaCungCap { get; set; }
+        public List<ChiTietHd> ChiTietHds { get; set; }
     }
 }
