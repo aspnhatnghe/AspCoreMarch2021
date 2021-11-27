@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MyCodeDemo.ViewModels.CartItem>
+@{
+    ViewData["Title"] = "Index";
+}
+@using MyCodeDemo.Helpers
+<h1>Giỏ hàng</h1>
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/Hinh/HangHoa/@item.Hinh" height="100" />
+                </td>
+                <td>@item.TenHh</td>
+                <td>@item.DonGia.ToVnd()</td>
+                <td>
+                    <input value="@item.SoLuong" />
+                </td>
+                <td>@item.ThanhTien.ToVnd()</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
