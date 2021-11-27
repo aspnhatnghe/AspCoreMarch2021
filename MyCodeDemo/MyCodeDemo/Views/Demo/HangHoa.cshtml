@@ -471,7 +471,7 @@
                     <a href="#"><img src="~/Hinh/HangHoa/@item.Hinh" alt="@item.TenHh"></a>
                     <div class="product_buttons">
                         <div class="quick_view">
-                            <a href="#"><h6>Mua ngay</h6></a>
+                            <a asp-action="AddToCart" asp-controller="Cart" asp-route-id="@item.MaHh"><h6>Mua ngay</h6></a>
                         </div>
                     </div>
                 </div>
