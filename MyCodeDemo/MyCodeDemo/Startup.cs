@@ -34,12 +34,20 @@ namespace MyCodeDemo
             services.AddScoped<IHangHoaService, HangHoaSqlServerService>();
 
             //đăng ký dùng EFCore
-            services.AddDbContext<MyDbContext>(option => {
+            services.AddDbContext<MyDbContext>(option =>
+            {
                 option.UseSqlServer(Configuration.GetConnectionString("MyDatabase"));
             });
 
-            services.AddDbContext<eStore20Context>(option => {
+            services.AddDbContext<eStore20Context>(option =>
+            {
                 option.UseSqlServer(Configuration.GetConnectionString("MyEstore"));
+            });
+
+            services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromMinutes(1);
+                option.Cookie.IsEssential = true;
             });
 
         }
@@ -63,6 +71,8 @@ namespace MyCodeDemo
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
