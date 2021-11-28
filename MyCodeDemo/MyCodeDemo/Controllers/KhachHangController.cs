@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyCodeDemo.Entities;
+using MyCodeDemo.Helpers;
 using MyCodeDemo.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,6 +17,8 @@ namespace MyCodeDemo.Controllers
     public class KhachHangController : Controller
     {
         private readonly eStore20Context _context;
+
+        public object MyTools { get; private set; }
 
         public KhachHangController(eStore20Context context)
         {
@@ -58,6 +62,13 @@ namespace MyCodeDemo.Controllers
                 return View();
             }
 
+            if (!khachHang.HieuLuc) //tài khoản đang deactive
+            {
+                ViewBag.ReturnUrl = ReturnUrl;
+                ViewBag.Message = "Tài khoản đang bị khóa";
+                return View();
+            }
+
             //Claims : đặc trưng người dùng (ten, email, role)
             var claims = new List<Claim>
             {
@@ -94,8 +105,35 @@ namespace MyCodeDemo.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Register(RegisterVM model)
+        public async Task<IActionResult> Register(RegisterVM model, IFormFile Hinh)
         {
+            if (ModelState.IsValid)
+            {
+                var hinh = string.Empty;
+                if (Hinh != null)
+                {
+                    hinh = MyTool.UploadFile("KhachHang", Hinh);
+                }
+
+                var khachHang = new KhachHang
+                {
+                    MaKh = model.MaKh,
+                    HoTen = model.HoTen,
+                    Email = model.Email,
+                    DienThoai = model.DienThoai,
+                    DiaChi = model.DiaChi,
+                    GioiTinh = model.GioiTinh,
+                    Hinh = hinh,
+                    MatKhau = model.MatKhau,
+                    NgaySinh = model.NgaySinh,
+                    HieuLuc = false,
+                    VaiTro = 1//default - customer
+                };
+                _context.Add(khachHang);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Login");
+            }
             return View();
         }
     }

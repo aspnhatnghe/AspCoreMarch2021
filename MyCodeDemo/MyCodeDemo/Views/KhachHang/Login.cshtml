@@ -6,6 +6,7 @@
 <h1>Login</h1>
 
 <form asp-action="Login">
+    <div class="text-danger">@ViewBag.Message</div>
     <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl " />
     <div>
         Mã người dùng:
