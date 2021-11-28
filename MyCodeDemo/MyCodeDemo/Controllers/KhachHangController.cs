@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyCodeDemo.Controllers
@@ -132,8 +133,35 @@ namespace MyCodeDemo.Controllers
                 _context.Add(khachHang);
                 await _context.SaveChangesAsync();
 
+                try
+                {
+                    var body = new StringBuilder();
+                    body.AppendLine("Chào mừng bạn,<br>");
+                    body.AppendLine("https://" + Request.Host + "/activation/" + khachHang.MaKh);
+                    GoogleMailer.Send(khachHang.Email, "Activate acoount", body.ToString());
+                }
+                catch { }
+
                 return RedirectToAction("Login");
             }
+            return View();
+        }
+
+
+        [AllowAnonymous]
+        [HttpGet("/activation/{manguoidung}")]
+        public IActionResult Activate(string manguoidung)
+        {
+            var khachHang = _context.KhachHang.SingleOrDefault(kh => kh.MaKh == manguoidung);
+            if (khachHang != null)
+            {
+                khachHang.HieuLuc = true;
+                _context.Update(khachHang);
+                _context.SaveChanges();
+                ViewBag.Message = "Active thành công";
+            }
+
+            ViewBag.Message = "Không có người dùng";
             return View();
         }
     }
