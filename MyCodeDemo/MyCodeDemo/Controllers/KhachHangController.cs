@@ -85,5 +85,18 @@ namespace MyCodeDemo.Controllers
             await HttpContext.SignOutAsync();
             return Redirect("/");
         }
+
+        [AllowAnonymous]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult Register(RegisterVM model)
+        {
+            return View();
+        }
     }
 }
