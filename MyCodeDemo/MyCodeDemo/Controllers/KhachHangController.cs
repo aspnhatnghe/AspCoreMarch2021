@@ -26,6 +26,19 @@ namespace MyCodeDemo.Controllers
             return View();
         }
 
+        public IActionResult Profile()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "KinhDoanh")]
+        public IActionResult KinhDoanh()
+        {
+            //User.IsInRole("KinhDoanh")
+            return View();
+        }
+
+
         [AllowAnonymous]
         public IActionResult Login(string ReturnUrl = null)
         {
