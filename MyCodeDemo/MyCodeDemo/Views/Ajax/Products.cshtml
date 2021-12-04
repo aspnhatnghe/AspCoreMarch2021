@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+<div id="TongSoTrang">@ViewBag.TongSoTrang</div>
+<div id="result" class="row"></div>
+<div id="LoadMore" class="btn btn-info">Tải thêm</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            let trangHienTai = 1;
+            let tongSoTrang = @ViewBag.TongSoTrang;
+
+            function loadMoreData() {
+                $.ajax({
+                    url: "/Ajax/LoadMore",
+                    type: "post",
+                    data: { page: trangHienTai },
+                    success: function (response) {
+                        $("#result").append(response);
+                        if (trangHienTai < tongSoTrang) {
+                            $("#LoadMore").show();
+                        } else {
+                            $("#LoadMore").hide();
+                        }
+                    }
+                });
+            }
+
+            loadMoreData();//gọi lần đầu
+
+            $("#LoadMore").click(function () {
+                if (trangHienTai < tongSoTrang) {
+                    trangHienTai++;
+                    loadMoreData();
+                }
+            });
+        });
+    </script>
+}
+

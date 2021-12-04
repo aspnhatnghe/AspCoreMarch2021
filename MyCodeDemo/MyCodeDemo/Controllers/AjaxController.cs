@@ -94,5 +94,32 @@ namespace MyCodeDemo.Controllers
             return Json(data.ToList());
         }
         #endregion
+
+
+        #region LoadMore
+        const int SO_SP_1_TRANG = 19;
+        public IActionResult Products()
+        {
+            ViewBag.TongSoSanPham = _context.HangHoa.Count();
+            ViewBag.TongSoTrang = Math.Ceiling(1.0 * _context.HangHoa.Count() / SO_SP_1_TRANG);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult LoadMore(int page)
+        {
+            var data = _context.HangHoa
+                .Skip((page - 1) * SO_SP_1_TRANG).Take(SO_SP_1_TRANG)
+                .Select(hh => new HangHoaViewModel
+                {
+                    TenHh = hh.TenHh,
+                    MaHh = hh.MaHh,
+                    DonGia = hh.DonGia.Value,
+                    Hinh = hh.Hinh
+                });
+            return PartialView(data.ToList());
+        }
+
+        #endregion
     }
 }
