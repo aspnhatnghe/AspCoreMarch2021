@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,12 +7,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using MyCodeDemo.Entities;
 using MyCodeDemo.Models;
 using MyCodeDemo.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyCodeDemo
@@ -51,14 +54,31 @@ namespace MyCodeDemo
                 option.Cookie.IsEssential = true;
             });
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(option => {
-                    option.LoginPath = "/KhachHang/Login";
-                    option.AccessDeniedPath = "/AccessDenied";
-                    option.LogoutPath = "/KhachHang/Logout";
-                });
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie(option => {
+            //        option.LoginPath = "/KhachHang/Login";
+            //        option.AccessDeniedPath = "/AccessDenied";
+            //        option.LogoutPath = "/KhachHang/Logout";
+            //    });
 
             services.AddSwaggerGen();
+
+            var secretKeyBytes = Encoding.UTF8.GetBytes(Configuration["JwtConfig:secret"]);
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(option =>
+            {
+                option.TokenValidationParameters = new TokenValidationParameters
+                {
+                    //tự cấp token
+                    ValidateIssuer = false,                    
+                    ValidateAudience = false,
+
+                    //config thông tin cấp và ký
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(secretKeyBytes),
+
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
