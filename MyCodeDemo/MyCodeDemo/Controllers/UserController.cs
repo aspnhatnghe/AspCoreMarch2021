@@ -64,11 +64,30 @@ namespace MyCodeDemo.Controllers
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenData = tokenHandler.WriteToken(token);
-            return Ok(new ApiResponseModelWithData { 
+            return Ok(new ApiResponseModelWithData
+            {
                 Success = true,
                 Message = "Đăng nhập thành công",
                 Data = tokenData
             });
+        }
+
+        [HttpGet]
+        public IActionResult Find(string hoTen)
+        {
+            try
+            {
+                var users = _context.KhachHang.AsQueryable();
+                if (!string.IsNullOrEmpty(hoTen))
+                {
+                    users = users.Where(kh => kh.HoTen.Contains(hoTen));
+                }
+                return Ok(users);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
