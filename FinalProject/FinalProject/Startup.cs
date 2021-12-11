@@ -57,6 +57,8 @@ namespace FinalProject
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            AppInitData.SeedData(app);
         }
     }
 }
