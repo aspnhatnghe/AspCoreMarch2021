@@ -1,9 +1,14 @@
 ﻿# AspCore March 2021
-Source code khóa học ASP.NET Core khai giảng 20/03/2021
+## Đồ án cuối khóa học ASP.NET Core
 
-* Chọn từng branch để có source code học từng buổi
+### Tech stack:
+* .NET Core 3.1
+* SQL Server
+* Entity Framework Core - Code First
 
-## 1. Enable Razor Runtime
+* Chọn từng branch để có source code từng buổi (MyProject_xx)
+
+## 1. Enable Razor Runtime (sửa file cshtml ko cần stop)
 ### 1.1 Install Package
 ```
 Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation
