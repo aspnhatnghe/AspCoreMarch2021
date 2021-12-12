@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Entities;
+using Microsoft.AspNetCore.Http;
+using FinalProject.Helpers;
 
 namespace FinalProject.Areas.Admin.Controllers
 {
@@ -54,10 +56,15 @@ namespace FinalProject.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryName,SeoUrl,Image")] Category category)
+        public async Task<IActionResult> Create([Bind("Id,CategoryName,SeoUrl")] Category category, IFormFile Image)
         {
             if (ModelState.IsValid)
             {
+                if (Image != null)
+                {
+                    category.Image = MyTool.UploadFile("Loai", Image);
+                }
+                category.SeoUrl = category.CategoryName.ToSeoUrl();
                 _context.Add(category);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

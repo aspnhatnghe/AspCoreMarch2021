@@ -23,6 +23,9 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="wwwroot\Hinh\Loai\" />
+    <Folder Include="wwwroot\Hinh\HangHoa\" />
+    <Folder Include="wwwroot\Hinh\KhachHang\" />
   </ItemGroup>
 
 </Project>
