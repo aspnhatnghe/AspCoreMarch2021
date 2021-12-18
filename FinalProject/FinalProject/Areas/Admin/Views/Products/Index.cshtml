@@ -50,9 +50,56 @@
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Delete" data-tenhh="@item.ProductName" data-id="@item.Id" asp-route-id="@item.Id" class="del-pro">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".del-pro").click(function (e) {
+                e.preventDefault();
+                const tensp = $(this).data("tenhh");
+                const trobj = $(this).closest("tr");
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Bạn chắc xóa hàng hóa '" + tensp + "'",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa ngay',
+                    cancelButtonText: 'Hủy xóa'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/Admin/Products/Remove/" + $(this).data("id"),
+                            method: "DELETE",
+                            success: function (response) {
+                                if (response.success) {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Đã xóa sản phẩm ' + tensp + 'thành công.',
+                                        'success'
+                                    );
+                                    //tìm dòng để xóa                                    
+                                    trobj.remove();
+                                } else {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Không thể xóa sản phẩm ' + tensp + ' này.',
+                                        'error'
+                                    );
+                                }
+                            }
+                        });
+                    }
+                })
+            });
+        });
+    </script>
+}

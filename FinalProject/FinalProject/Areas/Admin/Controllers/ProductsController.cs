@@ -64,7 +64,7 @@ namespace FinalProject.Areas.Admin.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ProductName,Description,Price,Discount,CategoryId")] ProductVM model, IFormFile Image)
-        {            
+        {
 
             if (ModelState.IsValid)
             {
@@ -106,7 +106,7 @@ namespace FinalProject.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ProductName,SeoUrl,Image,Description,Price,Discount,CategoryId")] Product product)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,ProductName,SeoUrl,Image,Description,Price,Discount,CategoryId")] Product product, IFormFile Hinh)
         {
             if (id != product.Id)
             {
@@ -115,6 +115,10 @@ namespace FinalProject.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
+                if (Hinh != null)
+                {
+                    product.Image = MyTool.UploadFile("HangHoa", Hinh) ?? product.Image;
+                }
                 try
                 {
                     _context.Update(product);
@@ -165,6 +169,23 @@ namespace FinalProject.Areas.Admin.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        // DELETE: Admin/Products/Remove/5
+        [HttpDelete, ActionName("Remove")]
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            try
+            {
+                var product = await _context.Products.FindAsync(id);
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+                return Json(new { Success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Success = false, Message = ex.Message });
+            }
         }
 
         private bool ProductExists(Guid id)
