@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using FinalProject.Entities;
 using Microsoft.AspNetCore.Http;
 using FinalProject.Helpers;
+using FinalProject.ViewModels;
+using AutoMapper;
 
 namespace FinalProject.Areas.Admin.Controllers
 {
@@ -15,10 +17,12 @@ namespace FinalProject.Areas.Admin.Controllers
     public class ProductsController : Controller
     {
         private readonly NhatNgheDbContext _context;
+        private readonly IMapper _mapper;
 
-        public ProductsController(NhatNgheDbContext context)
+        public ProductsController(NhatNgheDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Admin/Products
@@ -59,10 +63,13 @@ namespace FinalProject.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductName,Description,Price,Discount,CategoryId")] Product product, IFormFile Image)
-        {
+        public async Task<IActionResult> Create([Bind("ProductName,Description,Price,Discount,CategoryId")] ProductVM model, IFormFile Image)
+        {            
+
             if (ModelState.IsValid)
             {
+                var product = _mapper.Map<Product>(model);
+
                 product.Id = Guid.NewGuid();
                 if (Image != null)
                 {
@@ -73,8 +80,8 @@ namespace FinalProject.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "CategoryName", product.CategoryId);
-            return View(product);
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "CategoryName", model.CategoryId);
+            return View(model);
         }
 
         // GET: Admin/Products/Edit/5
