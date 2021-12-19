@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -62,11 +66,11 @@
             <nav class="site-navigation text-right text-md-center" role="navigation">
                 <div class="container">
                     <ul class="site-menu js-clone-nav d-none d-md-block">
-                        <li><a href="/">Home</a></li>
+                        <li><a href="/">@Localizer["home"]</a></li>
                         @await Component.InvokeAsync("CategoryMenu")
-                        
-                        <li><a href="contact.html">About</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+
+                        <li><a href="contact.html">@Localizer["about"]</a></li>
+                        <li><a href="contact.html">@Localizer["contact"]</a></li>
                     </ul>
                 </div>
             </nav>
@@ -75,8 +79,8 @@
         @RenderSection("breadcrum", required: false)
 
         @RenderBody()
-
-        @await Html.PartialAsync("_ShopperFooter")        
+        @await Html.PartialAsync("_SelectLanguagePartial")
+        @await Html.PartialAsync("_ShopperFooter")
     </div>
 
     <script src="~/js/jquery-3.3.1.min.js"></script>

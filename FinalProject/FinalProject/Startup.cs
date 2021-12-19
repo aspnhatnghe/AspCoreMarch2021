@@ -56,7 +56,7 @@ namespace FinalProject
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            var supportedCultures = new[] { "en-US", "vi-VN", "fr-FR", "ja-JP", "de-DE" };
+            var supportedCultures = new[] { "en-US", "vi-VN", "de-DE" };
             var localizationOptions = new RequestLocalizationOptions()
                 .SetDefaultCulture(supportedCultures[0])
                 .AddSupportedCultures(supportedCultures)
