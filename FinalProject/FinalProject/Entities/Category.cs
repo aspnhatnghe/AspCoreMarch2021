@@ -13,10 +13,15 @@ namespace FinalProject.Entities
         public string SeoUrl { get; set; } // tự gen, duy nhất
         public string Image { get; set; }
 
+        public int? ParentCategoryId { get; set; }
+        public Category ParentCategory { get; set; }
+        public ICollection<Category> ChildCategories { get; set; }
+
         public ICollection<Product> Products { get; set; }
         public Category()
         {
             Products = new HashSet<Product>();
+            ChildCategories = new HashSet<Category>();
         }
     }
 }

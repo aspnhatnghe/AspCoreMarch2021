@@ -28,6 +28,11 @@ namespace FinalProject.Entities
                 entity.HasIndex(c => c.CategoryName).IsUnique();
                 entity.Property(c => c.SeoUrl).IsRequired().HasMaxLength(100);
                 entity.HasIndex(c => c.SeoUrl).IsUnique();
+
+                entity.HasOne(p => p.ParentCategory)
+                    .WithMany(p => p.ChildCategories)
+                    .HasForeignKey(p => p.ParentCategoryId)
+                    .HasConstraintName("FK_Category_ParentCategory");
             });
 
             modelBuilder.Entity<Product>(entity => {

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FinalProject.Entities;
 using Microsoft.AspNetCore.Http;
 using FinalProject.Helpers;
+using FinalProject.Models;
 
 namespace FinalProject.Areas.Admin.Controllers
 {
@@ -45,9 +46,57 @@ namespace FinalProject.Areas.Admin.Controllers
             return View(category);
         }
 
+        private List<CategoryDropDownModel> GetCategories()
+        {
+            var result = new List<CategoryDropDownModel>();
+            var data = _context.Categories.ToList();
+
+            var categoriesLevel1 = data.Where(p => p.ParentCategoryId == null).OrderBy(p => p.CategoryName);
+
+            foreach (var item in categoriesLevel1)
+            {
+                result.Add(new CategoryDropDownModel
+                {
+                    Id = item.Id,
+                    CategoryName = item.CategoryName
+                });
+
+                //xử lý tương tự cho level 2
+                var categoriesLevel2 = data.Where(p => p.ParentCategoryId == item.Id).OrderBy(p => p.CategoryName);
+                if (categoriesLevel2.Count() > 0)
+                {
+                    foreach (var item2 in categoriesLevel2)
+                    {
+                        result.Add(new CategoryDropDownModel
+                        {
+                            Id = item2.Id,
+                            CategoryName = "|____" + item2.CategoryName
+                        });
+
+                        //xử lý tương tự cho level 3
+                        var categoriesLevel3 = data.Where(p => p.ParentCategoryId == item2.Id).OrderBy(p => p.CategoryName);
+                        if (categoriesLevel3.Count() > 0)
+                        {
+                            foreach (var item3 in categoriesLevel3)
+                            {
+                                result.Add(new CategoryDropDownModel
+                                {
+                                    Id = item3.Id,
+                                    CategoryName = "........|____" + item3.CategoryName
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
         // GET: Admin/Categories/Create
         public IActionResult Create()
         {
+            ViewData["ParentCategoryId"] = new SelectList(GetCategories(), "Id", "CategoryName");
             return View();
         }
 
@@ -55,10 +104,10 @@ namespace FinalProject.Areas.Admin.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CategoryName,SeoUrl")] Category category, IFormFile Image)
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(Category category, IFormFile Image)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
                 if (Image != null)
                 {
@@ -69,7 +118,7 @@ namespace FinalProject.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            //return View(category);
         }
 
         // GET: Admin/Categories/Edit/5
