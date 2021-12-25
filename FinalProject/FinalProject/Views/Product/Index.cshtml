@@ -25,14 +25,13 @@
                                 </div>
                             </div>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">Reference</button>
+                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" id="dropdownMenuReference" data-toggle="dropdown">SORT</button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
-                                    <a class="dropdown-item" href="#">Relevance</a>
-                                    <a class="dropdown-item" href="#">Name, A to Z</a>
-                                    <a class="dropdown-item" href="#">Name, Z to A</a>
+                                    <a class="dropdown-item product-sort" href="#" data-sortby="Name" data-sorttype="asc">Name, A to Z</a>
+                                    <a class="dropdown-item product-sort" href="#" data-sortby="Name" data-sorttype="desc">Name, Z to A</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Price, low to high</a>
-                                    <a class="dropdown-item" href="#">Price, high to low</a>
+                                    <a class="dropdown-item product-sort" href="#" data-sortby="Price" data-sorttype="asc">Price, low to high</a>
+                                    <a class="dropdown-item product-sort" href="#" data-sortby="Price" data-sorttype="desc">Price, high to low</a>
                                 </div>
                             </div>
                         </div>
@@ -188,6 +187,24 @@
                 $("#product_result").html(response);
                 $("#loading_panel").hide();
             }
+        });
+
+        $("a.product-sort").click(function (e) {
+            e.preventDefault();
+            $("#loading_panel").show();
+            $.ajax({
+                url: "/Product/FilterProduct",
+                data: {
+                    tenLoai: $("#tenloai").html(),
+                    sortType: $(this).data("sorttype"),
+                    sortBy: $(this).data("sortby")
+                },
+                type: "POST",
+                success: function (response) {
+                    $("#product_result").html(response);
+                    $("#loading_panel").hide();
+                }
+            });
         });
     });
 </script>
