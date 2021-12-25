@@ -9,5 +9,7 @@ namespace FinalProject.Helpers
     {
         public static string CategoryUrl = "chung-loai";
         public static string ProductUrl = "san-pham";
+        public static int NumOfPruductPerPage = 9;
+        public static int PageSizeLR = 3;
     }
 }

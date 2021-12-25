@@ -1,0 +1,56 @@
+﻿@model IEnumerable<FinalProject.ViewModels.ProductViewModel>
+@using FinalProject.Helpers
+<div class="row mb-5">
+
+    @foreach (var item in Model)
+    {
+        <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
+            <div class="block-4 text-center border">
+                <figure class="block-4-image">
+                    <a href="shop-single.html"><img src="~/Hinh/HangHoa/@item.Image" alt="@item.ProductName" class="img-fluid"></a>
+                </figure>
+                <div class="block-4-text p-4">
+                    <h3><a href="shop-single.html">@item.ProductName</a></h3>
+                    <p class="mb-0">Finding perfect t-shirt</p>
+                    <p class="text-primary font-weight-bold">@item.Price.ToVnd()</p>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+@{
+    int tongSoTrang = (int)ViewBag.TongSoTrang;
+    int trangHienTai = (int)ViewBag.TrangHienTai;
+
+    int pRight = trangHienTai + MyConstants.PageSizeLR > tongSoTrang ? tongSoTrang : trangHienTai + MyConstants.PageSizeLR;
+    int pLeft = trangHienTai - MyConstants.PageSizeLR > 0 ? trangHienTai - MyConstants.PageSizeLR : 1;
+    int indexR = trangHienTai + 1;
+}
+<div class="row" data-aos="fade-up">
+    <div class="col-md-12 text-center">
+        <div class="site-block-27">
+            <ul>
+                <li><a href="#">&lt;&lt;</a></li>
+                <li><a href="#">&lt;</a></li>
+
+                @while (pLeft < trangHienTai)
+                {
+                    pLeft++;
+                    <li><a href="#">@(pLeft-1)</a></li>
+                }
+
+                <li class="active"><span>@trangHienTai</span></li>
+
+                @while (indexR <= pRight)
+                {
+                    indexR++;
+                    <li><a href="#">@(indexR - 1)</a></li>
+                }
+
+                <li><a href="#">&gt;</a></li>
+                <li><a href="#">&gt;&gt;</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

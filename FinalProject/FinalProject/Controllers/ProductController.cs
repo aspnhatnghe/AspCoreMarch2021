@@ -21,19 +21,81 @@ namespace FinalProject.Controllers
         [HttpGet("/chung-loai/{tenLoai}")]
         public IActionResult Index(string tenLoai)
         {
-            var data = _context.Products.Where(p => p.Category.SeoUrl == tenLoai)
-                .Select(p => new ProductViewModel
-                { 
-                    CategoryId = p.CategoryId,
-                    Description = p.Description,
-                    Discount = p.Discount,
-                    Image = p.Image,
-                    Price = p.Price,
-                    ProductName = p.ProductName,
-                    Id = p.Id,
-                    SeoUrl = p.SeoUrl
-                }).ToList();
-            return View(data);
+            ViewBag.TenLoai = tenLoai;
+            //var data = _context.Products.Where(p => p.Category.SeoUrl == tenLoai)
+            //    .Select(p => new ProductViewModel
+            //    {
+            //        CategoryId = p.CategoryId,
+            //        Description = p.Description,
+            //        Discount = p.Discount,
+            //        Image = p.Image,
+            //        Price = p.Price,
+            //        ProductName = p.ProductName,
+            //        Id = p.Id,
+            //        SeoUrl = p.SeoUrl
+            //    }).ToList();
+            //return View(data);
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult FilterProduct(string tenLoai, string sortBy = "Name", string sortType = "asc", int page = 1)
+        {
+            var data = _context.Products.AsQueryable();
+
+            // Filter
+            if (!string.IsNullOrEmpty(tenLoai))
+            {
+                data = data.Where(p => p.Category.SeoUrl == tenLoai);
+            }
+
+            var result = data.Select(p => new ProductViewModel
+            {
+                CategoryId = p.CategoryId,
+                Description = p.Description,
+                Discount = p.Discount,
+                Image = p.Image,
+                Price = p.Price,
+                ProductName = p.ProductName,
+                Id = p.Id,
+                SeoUrl = p.SeoUrl
+            });
+
+            //Sort
+            switch (sortBy)
+            {
+                case "Price":
+                    if (sortType.ToLower() == "asc")
+                    {
+                        result = result.OrderBy(p => p.Price);
+                    }
+                    else
+                    {
+                        result = result.OrderByDescending(p => p.Price);
+                    }
+                    break;
+                default:
+                    if (sortType.ToLower() == "asc")
+                    {
+                        result = result.OrderBy(p => p.ProductName);
+                    }
+                    else
+                    {
+                        result = result.OrderByDescending(p => p.ProductName);
+                    }
+                    break;
+            }
+
+            //Thông tin phân trang
+            ViewBag.TongSoTrang = Convert.ToInt32(Math.Ceiling(result.Count() * 1.0 / MyConstants.NumOfPruductPerPage));
+            ViewBag.TrangHienTai = page;
+
+            //Paging
+            result = result.Skip((page - 1) * MyConstants.NumOfPruductPerPage).Take(MyConstants.NumOfPruductPerPage);
+
+
+            return PartialView("_ProductPartial", result.ToList());
         }
     }
 }
