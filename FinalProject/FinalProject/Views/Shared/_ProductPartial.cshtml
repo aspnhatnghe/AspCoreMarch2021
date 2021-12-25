@@ -13,6 +13,7 @@
                     <h3><a href="shop-single.html">@item.ProductName</a></h3>
                     <p class="mb-0">Finding perfect t-shirt</p>
                     <p class="text-primary font-weight-bold">@item.Price.ToVnd()</p>
+                    <button data-id="@item.Id" class="buy-product">Mua ngay</button>
                 </div>
             </div>
         </div>
@@ -54,3 +55,27 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $(".buy-product").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "/Cart/AddToCart",
+                type: "POST",
+                data: {
+                    id: $(this).data("id")
+                },
+                success: function (response) {
+                    if (response.success)//true
+                    {
+                        //update số lượng
+                        $("#cart_count").html(response.count);
+                    }
+                    else {
+                        alert("Thất bại");
+                    }
+                }
+            });
+        });
+    });
+</script>
