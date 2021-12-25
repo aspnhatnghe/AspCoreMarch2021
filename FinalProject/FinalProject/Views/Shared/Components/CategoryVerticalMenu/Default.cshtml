@@ -1,0 +1,15 @@
+﻿@model IEnumerable<FinalProject.ViewModels.CategoryVerticalMenuVM>
+
+<div class="border p-4 rounded mb-4">
+    <h3 class="mb-3 h6 text-uppercase text-black d-block">Categories</h3>
+    <ul class="list-unstyled mb-0">
+        @foreach (var item in Model)
+        {
+            <li class="mb-1">
+                <a href="/chung-loai/@item.SeoUrl" class="d-flex">
+                    <span>@item.CategoryName</span> <span class="text-black ml-auto">(@item.CountOfProduct)</span>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

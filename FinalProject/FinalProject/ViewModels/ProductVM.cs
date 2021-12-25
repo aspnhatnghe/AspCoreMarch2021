@@ -27,4 +27,10 @@ namespace FinalProject.ViewModels
         [Display(Name = "Loại")]
         public int CategoryId { get; set; }
     }
+
+    public class ProductViewModel : ProductVM
+    {
+        public Guid Id { get; set; }
+        public string SeoUrl { get; set; }
+    }
 }
