@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20211226020353_UserRole.cs" />
+    <Compile Remove="Migrations\20211226020353_UserRole.Designer.cs" />
+    <Compile Remove="Migrations\20211226020517_UserRole.cs" />
+    <Compile Remove="Migrations\20211226020517_UserRole.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\js\site.js" />
   </ItemGroup>
 

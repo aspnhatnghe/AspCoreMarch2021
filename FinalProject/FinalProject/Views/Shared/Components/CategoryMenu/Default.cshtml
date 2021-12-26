@@ -7,13 +7,13 @@
 {
     var categoriesLevel2 = Model.Where(p => p.ParentCategoryId == item.Id).OrderBy(p => p.CategoryName).ToList();
     <li class="@(categoriesLevel2.Count > 0 ? "has-children" : "" )">
-        <a href="index.html">@item.CategoryName</a>
+        <a href="/chung-loai/@item.SeoUrl">@item.CategoryName</a>
         @if (categoriesLevel2.Count > 0)
         {
             <ul class="dropdown">
                 @foreach (var item2 in categoriesLevel2)
                 {
-                    <li><a href="#">@item2.CategoryName</a></li>
+                    <li><a href="/chung-loai/@item2.SeoUrl">@item2.CategoryName</a></li>
                 }
             </ul>
         }
