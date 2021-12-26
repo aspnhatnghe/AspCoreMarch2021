@@ -19,10 +19,12 @@ namespace FinalProject.Entities
         public DateTime LastAccess { get; set; }
 
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<UserAddress> UserAddresses { get; set; }
 
         public UserInfo()
         {
             UserRoles = new HashSet<UserRole>();
+            UserAddresses = new HashSet<UserAddress>();
         }
     }
 

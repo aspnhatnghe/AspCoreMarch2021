@@ -19,4 +19,13 @@ namespace FinalProject.Helpers
         public static string Shipper = "Shipper";
         #endregion
     }
+
+    public enum OrderStatus
+    {
+        NEW_ORDER = 1,
+        CONFIRM = 2,
+        DELIVERING = 3,
+        DONE = 4,
+        CANCEL = 5
+    }
 }

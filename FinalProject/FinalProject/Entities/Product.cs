@@ -16,5 +16,11 @@ namespace FinalProject.Entities
         public double Discount { get; set; } // lưu từ 0 -> 1
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public ICollection<OrderDetail> OrderDetails { get; set; }
+        public Product()
+        {
+            OrderDetails = new HashSet<OrderDetail>();
+        }
     }
 }

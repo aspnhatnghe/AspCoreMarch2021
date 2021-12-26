@@ -90,6 +90,63 @@ namespace FinalProject.Entities
                     .HasForeignKey(p => p.CategoryId)
                     .HasConstraintName("FK_Product_Category");
             });
+
+            modelBuilder.Entity<UserAddress>(e => {
+                e.ToTable("UserAddress");
+                e.HasKey(e => e.Id);
+            });
+
+            modelBuilder.Entity<UserAddress>(e => {
+                e.ToTable("UserAddress");
+                e.HasKey(e => e.Id);
+                e.Property(e => e.Address).IsRequired().HasMaxLength(150);
+
+                e.HasOne(ua => ua.User)
+                    .WithMany(u => u.UserAddresses)
+                    .HasForeignKey(ua => ua.UserId)
+                    .HasConstraintName("FK_UA_User");
+            });
+
+            modelBuilder.Entity<Payment>(e => {
+                e.ToTable("Payment");
+                e.HasKey(e => e.Id);
+                e.Property(p => p.PaymentName).IsRequired().HasMaxLength(150);
+            });
+
+            modelBuilder.Entity<PaymentDetail>(e => {
+                e.ToTable("PaymentDetail");
+                e.HasKey(e => e.Id);
+
+                e.HasOne(pd => pd.Payment)
+                    .WithMany(p => p.PaymentDetails)
+                    .HasForeignKey(ua => ua.PaymentId)
+                    .HasConstraintName("FK_PD_Payment");
+
+                e.HasOne(pd => pd.Order)
+                    .WithMany(o => o.PaymentDetails)
+                    .HasForeignKey(pd => pd.OrderId)
+                    .HasConstraintName("FK_PD_Order");
+            });
+
+            modelBuilder.Entity<Order>(e => {
+                e.ToTable("Order");
+                e.HasKey(e => e.Id);
+
+            });
+            modelBuilder.Entity<OrderDetail>(e => {
+                e.ToTable("OrderDetail");
+                e.HasKey(e => e.Id);
+
+                e.HasOne(od => od.Order)
+                    .WithMany(o => o.OrderDetails)
+                    .HasForeignKey(pd => pd.OrderId)
+                    .HasConstraintName("FK_OD_Order");
+
+                e.HasOne(od => od.Product)
+                    .WithMany(p => p.OrderDetails)
+                    .HasForeignKey(od => od.ProductId)
+                    .HasConstraintName("FK_OD_Product");
+            });
         }
         #endregion
     }
