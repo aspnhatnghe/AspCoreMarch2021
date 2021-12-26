@@ -10,6 +10,8 @@ namespace FinalProject.Models
         {
             CreateMap<ProductVM, Product>();
             //Thêm method .ReverseMap() nếu map 2 chiều
+
+            CreateMap<RegisterVM, UserInfo>();
         }
     }
 }

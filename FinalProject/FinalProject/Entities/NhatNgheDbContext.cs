@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FinalProject.Entities;
 
 namespace FinalProject.Entities
 {
@@ -16,6 +17,14 @@ namespace FinalProject.Entities
         #region DbSet
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<UserInfo> UserInfos { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<UserAddress> UserAddresses { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentDetail> PaymentDetails { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderDetail> OrderDetails { get; set; }
         #endregion
 
         #region Config FluentAPI
@@ -148,6 +157,10 @@ namespace FinalProject.Entities
                     .HasConstraintName("FK_OD_Product");
             });
         }
+        #endregion
+
+        #region Config FluentAPI
+        public DbSet<FinalProject.Entities.UserInfo> UserInfo { get; set; }
         #endregion
     }
 }

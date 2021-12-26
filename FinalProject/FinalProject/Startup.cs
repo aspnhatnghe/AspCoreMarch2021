@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using FinalProject.Repositories;
 
 namespace FinalProject
 {
@@ -38,6 +40,14 @@ namespace FinalProject
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option => {
+                    option.LoginPath = "/Login";
+                    option.AccessDeniedPath = "/AccessDenied";
+                    option.LogoutPath = "/Logout";
+                });
+
+            services.AddScoped<IRoleRepo, RoleRepo>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +73,8 @@ namespace FinalProject
                 .AddSupportedUICultures(supportedCultures);
 
             app.UseRequestLocalization(localizationOptions);
+
+            app.UseAuthentication();
 
             app.UseRouting();
 

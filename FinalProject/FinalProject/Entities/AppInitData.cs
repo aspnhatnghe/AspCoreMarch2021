@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using FinalProject.Helpers;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,18 @@ namespace FinalProject.Entities
             using (var serviceScope = applicationBuilder.ApplicationServices.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetService<NhatNgheDbContext>();
+
+                //nếu chưa có Role thì tạo role default
+                if (!dbContext.Roles.Any())
+                {
+                    dbContext.Roles.AddRange(
+                        new Role { RoleName = MyConstants.Customer},
+                        new Role { RoleName = MyConstants.Administartor },
+                        new Role { RoleName = MyConstants.Accountant },
+                        new Role { RoleName = MyConstants.Shipper }
+                    );
+                    dbContext.SaveChanges();
+                }
 
                 //nếu mà chưa có Category thì tạo default
                 if (!dbContext.Categories.Any())
