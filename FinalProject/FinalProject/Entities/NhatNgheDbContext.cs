@@ -25,6 +25,8 @@ namespace FinalProject.Entities
         public DbSet<PaymentDetail> PaymentDetails { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Feature> Features { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
         #endregion
 
         #region Config FluentAPI
@@ -64,10 +66,6 @@ namespace FinalProject.Entities
                     .WithMany(u => u.UserRoles)
                     .HasForeignKey(ur => ur.UserId)
                     .HasConstraintName("FK_UserRole_UserInfo");
-                e.Property(ur => ur.Access).HasDefaultValueSql("1");
-                e.Property(ur => ur.Add).HasDefaultValueSql("0");
-                e.Property(ur => ur.Modify).HasDefaultValueSql("0");
-                e.Property(ur => ur.Remove).HasDefaultValueSql("0");
             });
 
             modelBuilder.Entity<Category>(entity =>

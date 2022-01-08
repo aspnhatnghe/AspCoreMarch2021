@@ -46,10 +46,6 @@ namespace FinalProject.Entities
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public int RoleId { get; set; }
-        public bool Access { get; set; }
-        public bool Add { get; set; }
-        public bool Modify { get; set; }
-        public bool Remove { get; set; }
 
         public Role Role { get; set; }
         public UserInfo User { get; set; }
