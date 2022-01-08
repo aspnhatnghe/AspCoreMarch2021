@@ -116,6 +116,13 @@ namespace FinalProject.Controllers
                     {
                         return Redirect(ReturnUrl);
                     }
+
+                    //nếu là Admin thì chuyển sang Admin
+                    var adminRole = _context.Roles.SingleOrDefault(r => r.RoleName == MyConstants.Administartor);
+                    if (user.UserRoles.Select(ur => ur.RoleId).Contains(adminRole.Id))
+                    {
+                        return Redirect("/Admin");
+                    }
                     return Redirect("/");
                 }
                 ViewBag.ErrorMessage = "Invalid password";

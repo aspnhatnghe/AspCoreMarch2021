@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Entities;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using FinalProject.Helpers;
 
 namespace FinalProject.Areas.Admin.Controllers
 {
@@ -24,6 +26,14 @@ namespace FinalProject.Areas.Admin.Controllers
         // GET: Admin/Permissions
         public async Task<IActionResult> Index()
         {
+            var permission = MyTool.CheckPermission(User, Request, _context);
+            if (permission == null)
+            {
+                return Redirect("/AccessDenied");
+            }
+
+            ViewBag.Permission = permission;
+
             var nhatNgheDbContext = _context.Permissions.Include(p => p.Feature).Include(p => p.Role);
             return View(await nhatNgheDbContext.ToListAsync());
         }
