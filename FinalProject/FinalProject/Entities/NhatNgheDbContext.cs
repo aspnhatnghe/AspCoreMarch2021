@@ -157,8 +157,5 @@ namespace FinalProject.Entities
         }
         #endregion
 
-        #region Config FluentAPI
-        public DbSet<FinalProject.Entities.UserInfo> UserInfo { get; set; }
-        #endregion
     }
 }

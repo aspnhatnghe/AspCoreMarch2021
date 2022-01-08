@@ -1,0 +1,21 @@
+﻿@model FinalProject.ViewModels.LoginVM
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+<form asp-action="Login">
+    <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+    <label class="text-danger">@ViewBag.ErrorMessage</label>
+    <div class="form-group">
+        <label asp-for="Username"></label>
+        <input asp-for="Username" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-info">Login</button>
+    </div>
+</form>
