@@ -13,13 +13,20 @@ namespace FinalProject.Helpers
         {
             var result = (keyword ?? "").ToLower().Trim();
 
-            result = Regex.Replace(result, @"[áàảãạăắằẳẵâấầẩẫậ]", "a");
-            result = Regex.Replace(result, @"[éèêëę]", "e");
-            result = Regex.Replace(result, @"[ìíîïı]", "i");
-            result = Regex.Replace(result, @"[òóôõöøőð]", "o");
-            result = Regex.Replace(result, @"[ưứừùúûüŭů]", "u");            
-            result = Regex.Replace(result, @"[^a-z0-9\s-]", "");// Remove invalid characters for param
-            result = Regex.Replace(result, @"\s+", @"-").Trim();
+            //Lọc bỏ từ tiếng Việt
+            result = Regex.Replace(result, @"[áàạảãâấầậẩẫăắằặẳẵ]", "a");
+            result = Regex.Replace(result, @"[éèẹẻẽêếềệểễ]", "e");
+            result = Regex.Replace(result, @"[óòọỏõôốồộổỗơớờợởỡ]", "o");
+            result = Regex.Replace(result, @"[úùụủũưứừựửữ]", "u");
+            result = Regex.Replace(result, @"[íìịỉĩ]", "i");
+            result = Regex.Replace(result, @"đ", "d");
+            result = Regex.Replace(result, @"[ýỳỵỷỹ]", "y");
+
+            //thay thế theo chuẩn URL friendly
+            result = Regex.Replace(result, @"[^a-z0-9\s-]", "");
+            result = Regex.Replace(result, @"\s+", "-");
+            result = Regex.Replace(result, @"\s", "-");
+            result = Regex.Replace(result, @"(-)+", "-");
 
             return result;
         }
