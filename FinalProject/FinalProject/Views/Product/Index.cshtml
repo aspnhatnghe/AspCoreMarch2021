@@ -174,30 +174,14 @@
     </div>
 </div>
 <div class="hidden" id="tenloai">@ViewBag.TenLoai</div>
-@section Scripts{ 
-<script>
-    $(document).ready(function () {
-        $.ajax({
-            url: "/Product/FilterProduct",
-            data: {
-                tenLoai: $("#tenloai").html()
-            },
-            type: "POST",
-            success: function (response) {
-                $("#product_result").html(response);
-                $("#loading_panel").hide();
-            }
-        });
-
-        $("a.product-sort").click(function (e) {
-            e.preventDefault();
-            $("#loading_panel").show();
+@section Scripts{
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        $(document).ready(function () {
             $.ajax({
                 url: "/Product/FilterProduct",
                 data: {
-                    tenLoai: $("#tenloai").html(),
-                    sortType: $(this).data("sorttype"),
-                    sortBy: $(this).data("sortby")
+                    tenLoai: $("#tenloai").html()
                 },
                 type: "POST",
                 success: function (response) {
@@ -205,7 +189,24 @@
                     $("#loading_panel").hide();
                 }
             });
+
+            $("a.product-sort").click(function (e) {
+                e.preventDefault();
+                $("#loading_panel").show();
+                $.ajax({
+                    url: "/Product/FilterProduct",
+                    data: {
+                        tenLoai: $("#tenloai").html(),
+                        sortType: $(this).data("sorttype"),
+                        sortBy: $(this).data("sortby")
+                    },
+                    type: "POST",
+                    success: function (response) {
+                        $("#product_result").html(response);
+                        $("#loading_panel").hide();
+                    }
+                });
+            });
         });
-    });
-</script>
+    </script>
 }

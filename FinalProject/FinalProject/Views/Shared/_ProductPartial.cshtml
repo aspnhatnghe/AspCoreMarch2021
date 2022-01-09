@@ -77,6 +77,11 @@ else
                     {
                         //update số lượng
                         $("#cart_count").html(response.count);
+                        Swal.fire(
+                            'Thông báo',
+                            'Thêm giỏ hàng thành công',
+                            'success'
+                        );
                     }
                     else {
                         alert("Thất bại");

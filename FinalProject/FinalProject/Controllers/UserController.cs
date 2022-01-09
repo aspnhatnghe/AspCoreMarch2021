@@ -103,7 +103,7 @@ namespace FinalProject.Controllers
                     {
                         new Claim(ClaimTypes.Name, user.FullName),
                         new Claim(ClaimTypes.Email, user.Email),
-                        new Claim("MaKh", user.Id.ToString())
+                        new Claim(MyConstants.ClaimCustomerId, user.Id.ToString())
                     };
 
                     foreach (var item in user.UserRoles)

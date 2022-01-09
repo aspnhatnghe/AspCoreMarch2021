@@ -11,6 +11,7 @@ namespace FinalProject.Helpers
         public static string ProductUrl = "san-pham";
         public static int NumOfPruductPerPage = 9;
         public static int PageSizeLR = 3;
+        public static string ClaimCustomerId = "MaKh";
 
         #region Roles
         public static string Customer = "Customer";

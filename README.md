@@ -68,16 +68,18 @@ _logger.LogWarning("Warning log");
 _logger.LogCritical("Critical log");
 ```
 
-## 21. Serilog write log to SQL Server
+## 2. Serilog write log to SQL Server
 
 Bước 1: Định nghĩa Entity Log
-B2: Vào DbContext thêm DbSet<Log>
-B3: Add Migration
+
+Bước 2: Vào DbContext thêm DbSet<Log>
+
+Bước 3: Add Migration
 
 ----
 Setup config log ở file ```appsettings.json```
 
-B4: Mở file ```appsettings.json``` thêm:
+Bước 4: Mở file ```appsettings.json``` thêm:
 
 ```
 {
@@ -102,7 +104,7 @@ B4: Mở file ```appsettings.json``` thêm:
 }
 ```
 
-B5: Chỉnh lại hàm ```Main()```
+Bước 5: Chỉnh lại hàm ```Main()```
 
 ```
 var configuration = new ConfigurationBuilder()
@@ -113,3 +115,10 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 ```
+
+Bước 6: Ghi log như bình thường (inject và sử dụng)
+
+======================================================
+
+# GIỎ HÀNG
+
