@@ -21,45 +21,49 @@ Cài thư viện:
 
 ## Serilog write to text file
 
-Trong file ```Program.cs``, hàm ```Main()``` thêm dòng:
+Trong file ```Program.cs```, hàm ```Main()``` thêm dòng:
 
 ```
-            Log.Logger = new LoggerConfiguration()
-                .WriteTo.Console(new RenderedCompactJsonFormatter())
-                .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console(new RenderedCompactJsonFormatter())
+    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
 ```
 
 
-Trong file ```Program.cs``, hàm ```CreateHostBuilder()``` thêm method ```.UseSerilog()```:
+Trong file ```Program.cs```, hàm ```CreateHostBuilder()``` thêm method ```.UseSerilog()```:
 
 ```
-            Host.CreateDefaultBuilder(args)
-                .UseSerilog()
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
+Host.CreateDefaultBuilder(args)
+    .UseSerilog()
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.UseStartup<Startup>();
+    });
 ```
 
 Chỗ nào (class nào) muốn ghi log thì inject ILogger vào:
+
 VD lớp UserController:
 
 ```
-    public class UserController : Controller
-    {
-        private readonly ILogger<UserController> _logger;
+public class UserController : Controller
+{
+    private readonly ILogger<UserController> _logger;
 
-        public UserController(ILogger<UserController> logger)
-        {
-            _logger = logger;
-        }
+    public UserController(ILogger<UserController> logger)
+    {
+        _logger = logger;
     }
+}
 ```
 
 Trong lớp đó tùy level mà ghi log tương ứng:
 
 ```
-_logger.LogInformation("Error when user register");
 _logger.LogError(ex.Message);
+_logger.LogInformation("Infor log");
+_logger.LogDebug("Debug logn DEMO");
+_logger.LogWarning("Warning log");
+_logger.LogCritical("Critical log");
 ```
