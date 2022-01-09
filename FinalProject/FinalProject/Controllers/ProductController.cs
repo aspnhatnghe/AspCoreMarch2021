@@ -2,6 +2,7 @@
 using FinalProject.Helpers;
 using FinalProject.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace FinalProject.Controllers
         [HttpPost]
         public IActionResult FilterProduct(string tenLoai, string sortBy = "Name", string sortType = "asc", int page = 1)
         {
-            var data = _context.Products.AsQueryable();
+            var data = _context.Products.Include(p => p.Category).AsQueryable();
 
             // Filter
             if (!string.IsNullOrEmpty(tenLoai))
@@ -59,7 +60,8 @@ namespace FinalProject.Controllers
                 Price = p.Price,
                 ProductName = p.ProductName,
                 Id = p.Id,
-                SeoUrl = p.SeoUrl
+                SeoUrl = p.SeoUrl,
+                LoaiSeoUrl = p.Category.SeoUrl
             });
 
             //Sort
@@ -96,6 +98,18 @@ namespace FinalProject.Controllers
 
 
             return PartialView("_ProductPartial", result.ToList());
+        }
+
+        [Route("/{loai}/{sanpham}")]
+        public IActionResult Detail(string sanpham)
+        {
+            var data = _context.Products.SingleOrDefault(hh => hh.SeoUrl == sanpham);
+            if (data == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(data);
         }
     }
 }

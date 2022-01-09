@@ -10,10 +10,12 @@ using Microsoft.AspNetCore.Http;
 using FinalProject.Helpers;
 using FinalProject.ViewModels;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class ProductsController : Controller
     {
         private readonly NhatNgheDbContext _context;

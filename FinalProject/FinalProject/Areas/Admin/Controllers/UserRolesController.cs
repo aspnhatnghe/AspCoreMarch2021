@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FinalProject.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class UserRolesController : Controller
     {
         private readonly NhatNgheDbContext _context;

@@ -9,10 +9,12 @@ using FinalProject.Entities;
 using Microsoft.AspNetCore.Http;
 using FinalProject.Helpers;
 using FinalProject.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FinalProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class CategoriesController : Controller
     {
         private readonly NhatNgheDbContext _context;
@@ -142,7 +144,7 @@ namespace FinalProject.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoryName,SeoUrl,Image")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CategoryName,Image")] Category category, IFormFile Hinh)
         {
             if (id != category.Id)
             {
@@ -153,6 +155,11 @@ namespace FinalProject.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (Hinh != null)
+                    {
+                        category.Image = MyTool.UploadFile("Loai", Hinh);
+                    }
+                    category.SeoUrl = category.CategoryName.ToSeoUrl();
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }

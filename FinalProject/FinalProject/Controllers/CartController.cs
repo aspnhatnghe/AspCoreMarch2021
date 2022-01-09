@@ -98,13 +98,19 @@ namespace FinalProject.Controllers
 
                 _context.SaveChanges();
                 _context.Database.CommitTransaction();
+
+                // build content email
+                // nên gọi Background Service --> Job Queue (C# Hangfire)
+
+                //Xóa Giỏ hàng
+                HttpContext.Session.Set(GIO_HANG, new List<CartItem>());
             }
             catch(Exception ex)
             {
                 _logger.LogError(ex.Message);
                 _context.Database.RollbackTransaction();
             }
-            return View();
+            return RedirectToAction("ThankYou");
         }
 
         const string GIO_HANG = "GioHang";
@@ -161,6 +167,23 @@ namespace FinalProject.Controllers
                     Success = false
                 });
             }
+        }
+
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
+
+        public IActionResult RemoveCartItem(Guid id)
+        {
+            var gioHang = Carts;
+            var item = gioHang.SingleOrDefault(p => p.Id == id);
+            if (item != null)
+            {
+                gioHang.Remove(item);
+            }
+            HttpContext.Session.Set(GIO_HANG, gioHang);
+            return RedirectToAction("Index");
         }
     }
 }

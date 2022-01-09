@@ -32,5 +32,6 @@ namespace FinalProject.ViewModels
     {
         public Guid Id { get; set; }
         public string SeoUrl { get; set; }
+        public string LoaiSeoUrl { get; set; }
     }
 }

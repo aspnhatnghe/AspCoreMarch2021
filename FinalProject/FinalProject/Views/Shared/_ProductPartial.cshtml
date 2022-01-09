@@ -7,13 +7,13 @@
         <div class="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
             <div class="block-4 text-center border">
                 <figure class="block-4-image">
-                    <a href="shop-single.html"><img src="~/Hinh/HangHoa/@item.Image" alt="@item.ProductName" class="img-fluid"></a>
+                    <a href="/@item.LoaiSeoUrl/@item.SeoUrl"><img src="~/Hinh/HangHoa/@item.Image" alt="@item.ProductName" class="img-fluid"></a>
                 </figure>
                 <div class="block-4-text p-4">
-                    <h3><a href="shop-single.html">@item.ProductName</a></h3>
+                    <h3><a href="/@item.LoaiSeoUrl/@item.SeoUrl">@item.ProductName</a></h3>
                     <p class="mb-0">Finding perfect t-shirt</p>
                     <p class="text-primary font-weight-bold">@item.Price.ToVnd()</p>
-                    <button data-id="@item.Id" class="buy-product">Mua ngay</button>
+                    <button data-id="@item.Id" class="buy-product buy-now btn btn-sm btn-primary">Mua ngay</button>
                 </div>
             </div>
         </div>
