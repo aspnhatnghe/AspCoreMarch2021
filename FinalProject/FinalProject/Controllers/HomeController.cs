@@ -22,6 +22,10 @@ namespace FinalProject.Controllers
 
         public IActionResult Index()
         {
+            _logger.LogInformation("Infor log");
+            _logger.LogDebug("Debug logn DEMO");
+            _logger.LogWarning("Warning log");
+            _logger.LogCritical("Critical log");
             return View();
         }
 

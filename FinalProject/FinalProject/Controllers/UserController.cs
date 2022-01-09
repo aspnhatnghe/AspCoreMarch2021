@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace FinalProject.Controllers
 {
@@ -19,12 +20,14 @@ namespace FinalProject.Controllers
         private readonly NhatNgheDbContext _context;
         private readonly IMapper _mapper;
         private readonly IRoleRepo _roleRepo;
+        private readonly ILogger<UserController> _logger;
 
-        public UserController(NhatNgheDbContext context, IMapper mapper, IRoleRepo roleRepo)
+        public UserController(NhatNgheDbContext context, IMapper mapper, IRoleRepo roleRepo, ILogger<UserController> logger)
         {
             _context = context;
             _mapper = mapper;
             _roleRepo = roleRepo;
+            _logger = logger;
         }
 
         [HttpGet("/Register")]
@@ -60,8 +63,10 @@ namespace FinalProject.Controllers
                     _context.SaveChanges();
                     return Redirect("/Login");
                 }
-                catch
+                catch (Exception ex)
                 {
+                    _logger.LogInformation("Error when user register");
+                    _logger.LogError(ex.Message);
                     return View();
                 }
             }
@@ -116,6 +121,9 @@ namespace FinalProject.Controllers
                     {
                         return Redirect(ReturnUrl);
                     }
+
+                    //Ghi log
+                    _logger.LogInformation($"{user.FullName} login successful at {DateTime.Now}");
 
                     //nếu là Admin thì chuyển sang Admin
                     var adminRole = _context.Roles.SingleOrDefault(r => r.RoleName == MyConstants.Administartor);
