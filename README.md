@@ -19,7 +19,7 @@ Cài thư viện:
 - Serilog.Sinks.MSSqlServer version 5.6.1
 
 
-## Serilog write to text file
+## 1. Serilog write to text file
 
 Trong file ```Program.cs```, hàm ```Main()``` thêm dòng:
 
@@ -66,4 +66,50 @@ _logger.LogInformation("Infor log");
 _logger.LogDebug("Debug logn DEMO");
 _logger.LogWarning("Warning log");
 _logger.LogCritical("Critical log");
+```
+
+## 21. Serilog write log to SQL Server
+
+Bước 1: Định nghĩa Entity Log
+B2: Vào DbContext thêm DbSet<Log>
+B3: Add Migration
+
+----
+Setup config log ở file ```appsettings.json```
+
+B4: Mở file ```appsettings.json``` thêm:
+
+```
+{
+  "Serilog": {
+    "Using": "Serilog.Sinks.MSSqlServer",
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "MSSqlServer",
+        "Args": {
+          "connectionString": "Server=.; Database=NhatNgheCommerce; Integrated Security=True",
+          "tableName":  "Logs"
+        }
+      }
+    ]
+  }
+}
+```
+
+B5: Chỉnh lại hàm ```Main()```
+
+```
+var configuration = new ConfigurationBuilder()
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
+    .CreateLogger();
 ```

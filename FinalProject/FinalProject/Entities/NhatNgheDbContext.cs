@@ -27,6 +27,7 @@ namespace FinalProject.Entities
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Log> Logs { get; set; }
         #endregion
 
         #region Config FluentAPI

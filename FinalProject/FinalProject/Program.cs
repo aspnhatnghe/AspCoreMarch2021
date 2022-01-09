@@ -15,13 +15,25 @@ namespace FinalProject
     {
         public static void Main(string[] args)
         {
-            Log.Logger = new LoggerConfiguration()
-                //.Enrich.FromLogContext()
-                .WriteTo.Console(new RenderedCompactJsonFormatter())
-                //.WriteTo.Debug(outputTemplate: DateTime.Now.ToString())
-                .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
-                .CreateLogger();
-            CreateHostBuilder(args).Build().Run();
+            try
+            {
+                var configuration = new ConfigurationBuilder()
+                    .AddJsonFile("appsettings.json")
+                    .Build();
+
+                Log.Logger = new LoggerConfiguration()
+                    .ReadFrom.Configuration(configuration)
+                    //.Enrich.FromLogContext()
+                    //.WriteTo.Console(new RenderedCompactJsonFormatter())
+                    //.WriteTo.Debug(outputTemplate: DateTime.Now.ToString())
+                    //.WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
